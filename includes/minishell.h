@@ -58,6 +58,7 @@ t_envar		*new_env(char *name, void *data);
 void		add_env(t_envar **envars, t_envar *new);
 t_envar		*to_last(t_envar *envars);
 void		find_and_remove(t_envar *envars, char *var_name);
+t_envar		*find_env(t_envar *envars, char *name);
 
 /* init_main.c */
 void		init_super(void);
@@ -69,5 +70,6 @@ void		sig_handler_quit(int sig_num);
 
 /* utils.c */
 int			ft_strcmp(char *s1, char *s2);
+int			is_meta(char c, char next);
 
 #endif

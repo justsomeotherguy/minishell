@@ -25,3 +25,12 @@ int	ft_strcmp(char *s1, char *s2)
 	}
 	return (0);
 }
+
+int	is_meta(char c, char next)
+{
+	if ((c == '<' && next == '<') || (c == '>' && next == '>'))
+		return (2);
+	else if (c == '|' || c == '<' || c == '>')
+		return (1);
+	return (0);
+}

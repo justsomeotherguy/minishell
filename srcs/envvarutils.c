@@ -60,6 +60,17 @@ t_envar	*to_last(t_envar *envars)
 	return (envars);
 }
 
+t_envar	*find_env(t_envar *envars, char *name)
+{
+	while (envars)
+	{
+		if (ft_strcmp(envars->name, name) == 0)
+			return (envars);
+		envars = envars->next;
+	}
+	return (NULL);
+}
+
 void	find_and_remove(t_envar *envars, char *var_name)
 {
 	t_envar		*temp;

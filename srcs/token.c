@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-int is_meta(char c, char next)
-{
-	if ((c == '<' && next == '<') || (c == '>' && next == '>'))
-		return (2);
-	else if (c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
-}
-
 int	get_line_length(char *line)
 {
 	int		len;
@@ -59,7 +50,7 @@ int	token_length(char const *line)
 		return (is_meta(line[len], line[len + 1]));
 	while (line[len] != '\0')
 	{
-		if (quote_flip == 0 && is_meta(line[len], line[len+1]) > 0)
+		if (quote_flip == 0 && is_meta(line[len], line[len + 1]) > 0)
 			return (len);
 		if (line[len] == 34 || line[len] == 39)
 		{
