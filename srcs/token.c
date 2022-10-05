@@ -50,13 +50,12 @@ int	token_length(char const *line)
 	{
 		if (line[len] == 34 || line[len] == 39)
 		{
-			if (quote_flip == 0)
+			if (quote_flip == 0 && len > 0)
+				return (len);
+			else if (quote_flip == 0 && len == 0)
 				quote_flip = 1;
 			else
-			{
-				len++;
-				break ;
-			}		
+				return (len + 1);
 		}
 		if ((line[len] == ' ' || line[len] == '\t') && quote_flip == 0)
 			break ;
@@ -69,28 +68,15 @@ char	*make_token(char *line)
 {
 	char	*tk;
 	int		i;
+	int		length;
 
 	i = 0;
-	tk = malloc(sizeof(char) * (token_length(line) + 1));
-	if (line[i] == 34 || line[i] == 39)
+	length = token_length(line);
+	tk = malloc(sizeof(char) * (length + 1));
+	while (i < length)
 	{
 		tk[i] = line[i];
 		i++;
-		while (line[i] != '\0' && (line[i] != 34 || line[i] == 39))
-		{
-			tk[i] = line[i];
-			i++;
-		}
-		tk[i] = line[i];
-		i++;
-	}
-	else
-	{
-		while (line[i] != '\0' && line[i] != ' ' && line[i] != '\t')
-		{
-			tk[i] = line[i];
-			i++;
-		}
 	}
 	tk[i] = '\0';
 	return (tk);
@@ -118,7 +104,10 @@ char	**make_tokens(char *line)
 		if (line[i] >= 33 && line[i] <= 126)
 		{
 			tokens[tk] = make_token(&line[i]);
-			i += ft_strlen(tokens[tk]);
+			if (get_line_length(tokens[tk]) == 1
+				&& (tokens[tk][0] == 34 || tokens[tk][0] == 39))
+				exit(-1); //TODO add error message
+			i += ft_strlen(tokens[tk]) - 1;
 			tk++;
 		}
 		i++;
