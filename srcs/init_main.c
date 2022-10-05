@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:10:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/05 12:31:30 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:08:27 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,17 @@ void	init_super(void)
 	g_super.envar = NULL;
 	g_super.builtins = malloc(sizeof(char **) * (8 + 34));
 	g_super.builtins = set_builtin(g_super.builtins);
+}
+
+char	**set_builtin(char **builtin)
+{
+	builtin[0] = "echo";
+	builtin[1] = "cd";
+	builtin[2] = "pwd";
+	builtin[3] = "export";
+	builtin[4] = "unset";
+	builtin[5] = "env";
+	builtin[6] = "exit";
+	builtin[7] = 0;
+	return (builtin);
 }
