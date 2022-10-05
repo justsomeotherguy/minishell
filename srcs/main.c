@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/09/26 16:38:54 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/05 12:11:08 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	char	**tokens;
 
+	init_super();
 	set_env(envp);
 	print_env();
 	signal(SIGINT, sig_handler_int);

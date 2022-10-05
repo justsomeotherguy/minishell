@@ -6,11 +6,13 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:39:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/09/26 15:46:52 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/05 12:32:54 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern	t_super	g_super;
 
 char	**set_builtin(char **builtin)
 {
@@ -27,21 +29,18 @@ char	**set_builtin(char **builtin)
 
 void	is_builtin(char **tokens)
 {
-	char	**builtin;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	builtin = malloc(sizeof(char **) * (8 + 34));
-	builtin = set_builtin(builtin);
 	while (tokens[i])
 	{
-		while (builtin[j])
+		while (g_super.builtins[j])
 		{
-			if (ft_strcmp(tokens[i], builtin[j]) == 0)
+			if (ft_strcmp(tokens[i], g_super.builtins[j]) == 0)
 			{
-				printf("line has %s\n", builtin[j]);
+				printf("line has %s\n", g_super.builtins[j]);
 				do_builtin(j);
 			}
 			j++;
@@ -54,6 +53,8 @@ void	is_builtin(char **tokens)
 
 void	do_builtin(int builtin_id)
 {
+	if (builtin_id == 5)
+		print_env();
 	if (builtin_id == 6)
 		exit(0);
 }

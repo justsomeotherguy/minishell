@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/09/26 16:35:59 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/05 12:24:07 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void		print_env(void);
 t_envar		*new_env(char *name, void *data);
 void		add_env(t_envar **envars, t_envar *new);
 t_envar		*to_last(t_envar *envars);
+
+/* init_main.c */
+void		init_super(void);
 
 /* sig.c */
 void		sig_handler_int(int sig_num);

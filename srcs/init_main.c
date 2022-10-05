@@ -1,42 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envvars.c                                          :+:      :+:    :+:   */
+/*   init_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 13:58:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/05 12:25:44 by jwilliam         ###   ########.fr       */
+/*   Created: 2022/10/05 12:10:33 by jwilliam          #+#    #+#             */
+/*   Updated: 2022/10/05 12:31:30 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern	t_super	g_super;
+extern t_super	g_super;
 
-void	set_env(char **envp)
+void	init_super(void)
 {
-	int			i;	
-	char		**envp_split;
-
-	i = 0;
-	while (envp[i])
-	{
-		envp_split = ft_split(envp[i], '=');
-		add_env(&g_super.envar, new_env(envp_split[0], envp_split[1]));
-		free(envp_split);
-		i++;
-	}
-}
-
-void	print_env(void)
-{
-	t_envar		*temp;
-
-	temp = g_super.envar;
-	while (temp)
-	{
-		printf("%s = %s\n", temp->name, (char *)temp->data);
-		temp = temp->next;
-	}
+	g_super.envar = (t_envar *)malloc(sizeof(t_envar));
+	g_super.envar = NULL;
+	g_super.builtins = malloc(sizeof(char **) * (8 + 34));
+	g_super.builtins = set_builtin(g_super.builtins);
 }
