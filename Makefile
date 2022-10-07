@@ -6,7 +6,7 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/10/05 12:22:43 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/10/07 14:59:53 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,13 @@ NAME = minishell
 CC = gcc
 
 INCL = includes
+#INCL_RL = /usr/local/opt/readline/include/
 
 LIB = libft
 
 FLAGS = #-Wall -Werror -Wextra
 
-RL = -lreadline
+#RL = /usr/local/opt/readline/lib -lreadline
 
 RM = rm -rf
 
@@ -45,14 +46,14 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 		@$(MAKE) -C ./$(LIB)
-		@$(CC) $(FLAGS) $(OBJS) -I $(INCL) -L$(LIB) ./$(LIB)/$(LIB).a $(RL) -o $(NAME)
+		@$(CC) $(FLAGS) -I $(INCL) -L$(LIB) ./$(LIB)/$(LIB).a -lreadline $(OBJS) -o $(NAME)
 		@echo "\033[32m████████████████████████████"
 		@echo "\033[32m█████ \033[39mpushswap created \033[32m█████"
 		@echo "\033[32m████████████████████████████ \033[39m"
 
 $(OBJS_DIR)%.o: $(SRC_DIR)%.c
 		@mkdir -p $(OBJS_DIR)
-		@$(CC) $(FLAGS) -o $@ -c $< -I $(INCL) -I ./$(LIB)/$(INCL)
+		@$(CC) $(FLAGS) -o $@ -c $< -I $(INCL) -I ./$(LIB)/$(INCL) -lreadline
 
 clean:
 		@$(MAKE) clean -C ./$(LIB)

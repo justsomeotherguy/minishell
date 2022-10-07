@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:10:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/05 15:08:27 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:44:41 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 extern t_super	g_super;
 
+/*
+Initialize global variable super.
+Allocate memory for environment variables and preset builtin command strings.
+*/
 void	init_super(void)
 {
 	g_super.envar = (t_envar *)malloc(sizeof(t_envar));
@@ -22,6 +26,9 @@ void	init_super(void)
 	g_super.builtins = set_builtin(g_super.builtins);
 }
 
+/*
+Generate preset builtin commands character strings
+*/
 char	**set_builtin(char **builtin)
 {
 	builtin[0] = "echo";

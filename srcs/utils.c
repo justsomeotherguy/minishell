@@ -6,12 +6,16 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:29:59 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/09/26 15:38:56 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:37:56 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+Compares two strings, returns 0 if the strings are a match, else return
+the difference between the character(s) of s1 and s2.
+*/
 int	ft_strcmp(char *s1, char *s2)
 {
 	int		i;
@@ -26,6 +30,12 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
+/*
+Checks if the input characters from a token is a redirector.
+Return 2 if it is a double angle bracket redirect.
+Return 1 if it is a single angle bracket redirect.
+Else return 0.
+*/
 int	is_meta(char c, char next)
 {
 	if ((c == '<' && next == '<') || (c == '>' && next == '>'))

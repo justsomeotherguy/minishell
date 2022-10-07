@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:58:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/05 12:25:44 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:41:14 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 extern	t_super	g_super;
 
+/*
+Creates the initial environment variable list from the envp arguments
+received from the main function.
+*/
 void	set_env(char **envp)
 {
 	int			i;	

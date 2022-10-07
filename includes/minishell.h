@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/05 16:08:38 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:04:08 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ int			get_line_length(char *line);
 int			token_length(char const *line);
 char		*make_token(char *line);
 char		**make_tokens(char *line);
+void		expand_tokens(char **tokens);
 
 /* builtins.c */
 void		is_builtin(char **tokens);
 void		do_builtin(int builtin_id, char **tokens);
+void		builtin_pwd(void);
 void		builtin_export(char **tokens);
 void		builtin_echo(char **tokens);
 

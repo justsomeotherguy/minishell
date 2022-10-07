@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:39:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/05 16:14:23 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:46:31 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 extern	t_super	g_super;
 
+/*
+Check input tokens to verify if they match any of the builtin commands,
+if one is found, set builtin id int and pass to switcher function.
+*/
 void	is_builtin(char **tokens)
 {
 	int		i;
@@ -39,6 +43,9 @@ void	is_builtin(char **tokens)
 }
 
 /*
+Switcher to check what builtin was used and pass tokens to the appropriate
+builtin commands function.
+
 Builtin IDs
 0 = echo;
 1 = cd;
@@ -52,6 +59,8 @@ void	do_builtin(int builtin_id, char **tokens)
 {
 	if (builtin_id == 0)
 		builtin_echo(tokens);
+	if (builtin_id == 2)
+		builtin_pwd();
 	if (builtin_id == 3)
 		builtin_export(tokens);
 	if (builtin_id == 4)
@@ -62,6 +71,10 @@ void	do_builtin(int builtin_id, char **tokens)
 		exit(0);
 }
 
+/*
+Creates a new environment variable using input token as name and data to
+fill in the node.
+*/
 void	builtin_export(char **tokens)
 {
 	char		**split;
@@ -78,6 +91,15 @@ void	builtin_export(char **tokens)
 	free(split);
 }
 
+void	builtin_pwd(void)
+{
+	printf("%s\n", find_env(g_super.envar, "PWD")->data);
+}
+
+/*
+Emulates the echo command, check if second token is -n to verify if option
+is used, then print remaining tokens followed by newline if -n was used.
+*/
 void	builtin_echo(char **tokens)
 {
 	int			i;

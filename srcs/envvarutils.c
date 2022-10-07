@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 16:31:15 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/05 14:21:32 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:48:21 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	add_env(t_envar **envars, t_envar *new)
 	}
 }
 
+/*
+Gets the last node entry in the environment variables list.
+*/
 t_envar	*to_last(t_envar *envars)
 {
 	if (!envars)
@@ -60,6 +63,11 @@ t_envar	*to_last(t_envar *envars)
 	return (envars);
 }
 
+/*
+Find and retrieve an entry with a matching name from the input arguments.
+If the environment variable names entry matches, returns the pointer to the 
+environment variable node else return NULL.
+*/
 t_envar	*find_env(t_envar *envars, char *name)
 {
 	while (envars)
@@ -71,6 +79,11 @@ t_envar	*find_env(t_envar *envars, char *name)
 	return (NULL);
 }
 
+/*
+Find and remove an entry with a matching name from the input arguments.
+If the environment variable names entry matches, removes the node entry from
+the environment variables.
+*/
 void	find_and_remove(t_envar *envars, char *var_name)
 {
 	t_envar		*temp;

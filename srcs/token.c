@@ -6,11 +6,13 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/09/26 15:38:55 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:10:58 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_super	g_super;
 
 int	get_line_length(char *line)
 {
@@ -117,10 +119,32 @@ char	**make_tokens(char *line)
 		i++;
 	}
 	tokens[tk] = 0;
-	while (tokens[j])
-	{
-		printf("%s\n", tokens[j]);
-		j++;
-	}
+	expand_tokens(tokens);
 	return (tokens);
+}
+
+/*
+Checks tokens if $ character is within it.
+Checks name after $ against environment variables and replaces token with
+the content of the variable.
+*/
+void	expand_tokens(char **tokens)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (tokens[i])
+	{
+		j = 0;
+		while (tokens[i][j] != '\0')
+		{
+			if (tokens[i][j] == '$')
+			{
+				tokens[i] = find_env(g_super.envar, (tokens[i] + 1))->data;
+			}
+			j++;
+		}
+		i++;
+	}
 }

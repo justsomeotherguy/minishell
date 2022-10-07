@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/05 12:11:08 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:07:12 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	main(int argc, char **argv, char **envp)
 	init_super();
 	set_env(envp);
 	print_env();
-	signal(SIGINT, sig_handler_int);
 	signal(SIGQUIT, sig_handler_quit);
 	while (1)
 	{
+		signal(SIGINT, sig_handler_int);
 		line = readline("Super Cool Line: ");
 		if (!line)
 			printf("Empty line");
@@ -39,5 +39,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
+//	rl_clear_history();
 	return (0);
 }

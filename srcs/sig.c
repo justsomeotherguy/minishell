@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:41:45 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/09/26 15:38:51 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:03:55 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	sig_handler_int(int sig_num)
 {
-	int	i;
-
-	i = sig_num;
-	signal(SIGINT, sig_handler_int);
-	printf("SIGINT\n");
+	(void)sig_num;
+	write(2, "\n", 1);
+//	rl_replace_line("", 0); (Issues with library linking)
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	sig_handler_quit(int sig_num)
