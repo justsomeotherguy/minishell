@@ -132,19 +132,23 @@ void	expand_tokens(char **tokens)
 {
 	int		i;
 	int		j;
+	t_envar	*test;
 
-	i = 0;
-	while (tokens[i])
+	i = -1;
+	while (tokens[++i])
 	{
 		j = 0;
+		if (tokens[i][j] == '\'')
+			continue ;
 		while (tokens[i][j] != '\0')
 		{
 			if (tokens[i][j] == '$')
 			{
-				tokens[i] = find_env(g_super.envar, (tokens[i] + 1))->data;
+				test = find_env(g_super.envar, (tokens[i] + 1));
+				if (test != NULL)
+					tokens[i] = (char *)test->data;
 			}
 			j++;
 		}
-		i++;
 	}
 }

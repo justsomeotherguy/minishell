@@ -12,7 +12,7 @@ static char	*get_path(char const *currentPath, char const *cmd)
 		rtn = ft_strjoin((find_env(g_super.envar, "PWD")->data),
 				ft_strjoin("/", cmd));
 	else
-		rtn = ft_strjoin(*currentPath, ft_strjoin("/", cmd));
+		rtn = ft_strjoin(currentPath, ft_strjoin("/", cmd));
 	return (rtn);
 }
 
