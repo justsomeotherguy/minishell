@@ -76,5 +76,10 @@ void		sig_handler_quit(int sig_num);
 /* utils.c */
 int			ft_strcmp(char *s1, char *s2);
 int			is_meta(char c, char next);
+void		free_2d_array(char **array);
+
+/* path.c */
+char		**init_pathlist(void);
+char		*get_path_for_cmd(char **pathlst, char const *cmd);
 
 #endif

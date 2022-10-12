@@ -2,20 +2,7 @@
 
 extern t_super	g_super;
 
-char	**init_pathlist(void)
-{
-	char			**pathlst;
-	t_envar const	*path;
-
-	path = find_env(g_super.envar, "PATH");
-	if (path)
-		pathlst = ft_split(path->data, ':');
-	else
-		pathlst = NULL;
-	return (pathlst);
-}
-
-char	*get_path(char const *currentPath, char const *cmd)
+static char	*get_path(char const *currentPath, char const *cmd)
 {
 	char	*rtn;
 
@@ -27,6 +14,19 @@ char	*get_path(char const *currentPath, char const *cmd)
 	else
 		rtn = ft_strjoin(*currentPath, ft_strjoin("/", cmd));
 	return (rtn);
+}
+
+char	**init_pathlist(void)
+{
+	char			**pathlst;
+	t_envar const	*path;
+
+	path = find_env(g_super.envar, "PATH");
+	if (path)
+		pathlst = ft_split(path->data, ':');
+	else
+		pathlst = NULL;
+	return (pathlst);
 }
 
 char	*get_path_for_cmd(char **pathlst, char const *cmd)
