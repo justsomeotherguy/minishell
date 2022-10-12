@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:39:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/07 15:46:31 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/12 14:30:01 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	do_builtin(int builtin_id, char **tokens)
 {
 	if (builtin_id == 0)
 		builtin_echo(tokens);
+	if (builtin_id == 1)
+		builtin_cd(tokens);
 	if (builtin_id == 2)
 		builtin_pwd();
 	if (builtin_id == 3)
@@ -71,54 +73,3 @@ void	do_builtin(int builtin_id, char **tokens)
 		exit(0);
 }
 
-/*
-Creates a new environment variable using input token as name and data to
-fill in the node.
-*/
-void	builtin_export(char **tokens)
-{
-	char		**split;
-	int			i;
-
-	split = ft_split(tokens[1], '=');
-	i = 0;
-	if (!split[1])
-		return ;
-	else
-	{
-		add_env(&g_super.envar, new_env(split[0], split[1]));
-	}
-	free(split);
-}
-
-void	builtin_pwd(void)
-{
-	printf("%s\n", find_env(g_super.envar, "PWD")->data);
-}
-
-/*
-Emulates the echo command, check if second token is -n to verify if option
-is used, then print remaining tokens followed by newline if -n was used.
-*/
-void	builtin_echo(char **tokens)
-{
-	int			i;
-	int			option;
-
-	i = 1;
-	option = 0;
-	if (ft_strcmp(tokens[1], "-n") == 0)
-	{
-		i++;
-		option++;
-	}
-	while (tokens[i])
-	{	
-		printf("%s", tokens[i]);
-		i++;
-		if (tokens[i] != 0)
-			printf(" ");
-	}
-	if (option != 1)
-		printf("\n");
-}
