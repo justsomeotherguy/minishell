@@ -44,3 +44,12 @@ int	is_meta(char c, char next)
 		return (1);
 	return (0);
 }
+
+void	free_2d_array(char **array)
+{
+	if (array)
+	{
+		free_2d_array(array + 1);
+		free(array);
+	}
+}
