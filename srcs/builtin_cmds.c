@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/12 14:29:31 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:24:10 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void	builtin_echo(char **tokens)
 
 	i = 1;
 	option = 0;
+	if (!tokens[1])
+	{
+		printf("\n");
+		return ;
+	}
 	if (ft_strcmp(tokens[1], "-n") == 0)
 	{
 		i++;
@@ -77,16 +82,20 @@ void	builtin_cd(char **tokens)
 {
 	char		cwd[256];
 	t_envar		*pwd;
+	t_envar		*oldpwd;
 
 	pwd = find_env(g_super.envar, "PWD");
+	oldpwd = find_env(g_super.envar, "OLDPWD");
 	if (chdir(tokens[1]) == 0)
 	{
 		if (getcwd(cwd, sizeof(cwd)) == NULL)
 			printf("getcwd error\n");
 		else
 		{
-			printf("%s\n", cwd);
-			ft_strlcpy((char *)pwd->data, cwd, ft_strlen(cwd));
+			free(oldpwd->data);
+			oldpwd->data = (char *)ft_strdup(pwd->data);
+			free(pwd->data);
+			pwd->data = ft_strdup(cwd);
 		}
 	}
 	else

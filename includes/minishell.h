@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/12 14:26:18 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:15:39 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char		**make_tokens(char *line);
 void		expand_tokens(char **tokens);
 
 /* builtins.c */
-void		is_builtin(char **tokens);
+int			is_builtin(char **tokens);
 void		do_builtin(int builtin_id, char **tokens);
 
 /* builtin_cmds.c */
@@ -64,6 +64,9 @@ void		add_env(t_envar **envars, t_envar *new);
 t_envar		*to_last(t_envar *envars);
 void		find_and_remove(t_envar *envars, char *var_name);
 t_envar		*find_env(t_envar *envars, char *name);
+
+/* execute.c */
+void		executor(char **tokens);
 
 /* init_main.c */
 void		init_super(void);

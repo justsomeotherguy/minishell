@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:39:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/12 14:30:01 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:19:44 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ extern	t_super	g_super;
 Check input tokens to verify if they match any of the builtin commands,
 if one is found, set builtin id int and pass to switcher function.
 */
-void	is_builtin(char **tokens)
+int	is_builtin(char **tokens)
 {
 	int		i;
 	int		j;
@@ -33,13 +33,14 @@ void	is_builtin(char **tokens)
 			{
 				printf("line has %s\n", g_super.builtins[j]);
 				do_builtin(j, tokens);
+				return (j);
 			}
 			j++;
 		}
 		i++;
 		j = 0;
 	}
-	return ;
+	return (-1);
 }
 
 /*

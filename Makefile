@@ -6,7 +6,7 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/10/12 14:29:47 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/10/13 13:48:20 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILES = main.c \
 		builtin_cmds.c \
 		envvars.c \
 		envvarutils.c \
+		execute.c \
 		init_main.c \
 		sig.c \
 		token.c \
