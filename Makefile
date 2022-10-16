@@ -6,7 +6,7 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/10/13 13:48:20 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/10/14 13:10:14 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 		@$(MAKE) -C ./$(LIB)
-		@$(CC) $(FLAGS) -I $(INCL) -L$(LIB) ./$(LIB)/$(LIB).a -lreadline $(OBJS) -o $(NAME)
+		@$(CC) $(FLAGS) $(OBJS) -L$(LIB) $(LIB)/$(LIB).a -lreadline -o $@
 		@echo "\033[32m████████████████████████████"
 		@echo "\033[32m█████ \033[39mpushswap created \033[32m█████"
 		@echo "\033[32m████████████████████████████ \033[39m"

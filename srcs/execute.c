@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/13 15:34:20 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:35:31 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	do_process(char **paths, char **tokens)
 	exec_path = get_path_for_cmd(paths, tokens[0]);
 	if (!exec_path)
 	{
-		printf("Unable to find command\n");
+		printf("%s: command not found\n", tokens[0]);
 		exit(1);
 	}
 	if (execve(exec_path, tokens, NULL) == -1)

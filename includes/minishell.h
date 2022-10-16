@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/13 14:15:39 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:40:54 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,38 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# include <sys/wait.h>
+# include <sys/types.h>
+
 # include <signal.h>
 
 # include "libft.h"
 
+# define T_DEFAULT	"\033[0m"
+# define T_RED		"\033[1;91m"
+# define T_BLUE		"\033[1;94m"
+
 typedef struct s_super
 {
-	struct s_envar	*envar;
-	char			**builtins;
+	struct s_envar		*envar;
+	char				**builtins;
+	struct s_cmdset		*cmds;
+	int					status;
 }	t_super;
 
 typedef struct s_envar
 {
-	char			*name;
-	void			*data;
-	struct s_envar	*next;
+	char				*name;
+	void				*data;
+	struct s_envar		*next;
 }	t_envar;
+
+typedef struct s_cmdset
+{
+	char				**tokens;
+	int					fd_in;
+	int					fd_out;
+}	t_cmdset;
 
 /* token.c */
 int			get_line_length(char *line);

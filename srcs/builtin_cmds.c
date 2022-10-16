@@ -6,14 +6,13 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/13 14:24:10 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:38:06 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_super	g_super;
-
 
 /*
 Creates a new environment variable using input token as name and data to
@@ -37,7 +36,7 @@ void	builtin_export(char **tokens)
 
 void	builtin_pwd(void)
 {
-	printf("%s\n", find_env(g_super.envar, "PWD")->data);
+	printf("%s\n", (char *)find_env(g_super.envar, "PWD")->data);
 }
 
 /*

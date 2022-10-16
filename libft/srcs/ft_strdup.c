@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:46:56 by jwilliam          #+#    #+#             */
-/*   Updated: 2021/12/14 12:40:59 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:40:06 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ char	*ft_strdup(const char *str)
 		ptr[index] = str[index];
 		index++;
 	}
-	ptr[index] = 0;
+	ptr[index] = '\0';
 	return (ptr);
 }
