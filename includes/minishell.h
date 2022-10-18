@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/14 17:40:54 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:41:21 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef struct s_super
 {
 	struct s_envar		*envar;
 	char				**builtins;
-	struct s_cmdset		*cmds;
+	char				**full_tokens;
+	struct s_cmdset		**cmds;
 	int					status;
 }	t_super;
 
@@ -49,6 +50,7 @@ typedef struct s_envar
 typedef struct s_cmdset
 {
 	char				**tokens;
+	int					pid;
 	int					fd_in;
 	int					fd_out;
 }	t_cmdset;
@@ -87,6 +89,9 @@ void		executor(char **tokens);
 /* init_main.c */
 void		init_super(void);
 char		**set_builtin(char **builtin);
+
+/* parse_token.c */
+void		parse_token(void);
 
 /* sig.c */
 void		sig_handler_int(int sig_num);
