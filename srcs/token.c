@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/18 14:45:47 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:12:36 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	**make_tokens(char *line)
 	int		i;
 	int		tk;
 
-	tokens = malloc(sizeof(char *) * (get_line_length(line) + 1));
+	tokens = malloc(sizeof(char **) * (get_line_length(line) + 1));
 	if (!tokens || !line)
 		return (NULL);
 	i = 0;

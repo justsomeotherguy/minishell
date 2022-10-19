@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/18 17:41:21 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:47:33 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_super
 	struct s_envar		*envar;
 	char				**builtins;
 	char				**full_tokens;
-	struct s_cmdset		**cmds;
+	struct s_cmdset		*cmds;
 	int					status;
 }	t_super;
 

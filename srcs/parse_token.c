@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:55:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/18 17:50:41 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:28:09 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,35 @@ static int	count_pipes(void)
 	j = 0;
 	while (g_super.full_tokens[j])
 	{
-		if (g_super.full_tokens[j] == "|")
+		if (ft_strcmp(g_super.full_tokens[j], "|") == 0)
 			count++;
 		j++;
 	}
 	return (count);
+}
+
+static char	**allocate_cmds(void)
+{
+	char	**cmds;
+	int		i;
+	int		j;
+	int		tk;
+
+	i = 1;
+	j = 0;
+	tk = 0;
+	while (g_super.full_tokens[tk])
+	{
+		if (ft_strcmp(g_super.full_tokens[tk], "|") == 0)
+		{
+			g_super.cmds[j].tokens = ft_calloc(i + 1, sizeof(char *));
+			j++;
+			i = 1;
+		}
+		i++;
+		tk++;
+	}
+	return (cmds);
 }
 
 void	parse_token(void)
@@ -51,30 +75,33 @@ void	parse_token(void)
 	tk = 0;
 	i = 0;
 	j = 0;
-	if (pipe_count != 0)
+	printf("pipes %i\nparse token\n", pipe_count);
+	g_super.cmds = ft_calloc((pipe_count + 2), sizeof(t_cmdset));
+	if (pipe_count > 0)
 	{
-		g_super.cmds = malloc(sizeof(char *) * pipe_count + 1);
+		allocate_cmds();
 		while (g_super.full_tokens[tk])
 		{
+			printf("current parsing token %s\n", g_super.full_tokens[tk]);
 			if (ft_strcmp(g_super.full_tokens[tk], "|") == 0)
 			{
-				g_super.cmds[j]->tokens[i] = '\0';
+				g_super.cmds[j].tokens[i] = 0;
 				i = 0;
 				j++;
 			}
 			else
 			{
-				g_super.cmds[j]->tokens[i] = ft_strdup(g_super.full_tokens[tk]);
+				g_super.cmds[j].tokens[i] = ft_strdup(g_super.full_tokens[tk]);
+				printf("cmd set %i, token %s\n", j, g_super.cmds[j].tokens[i]);
 				i++;
-				tk++;
 			}
+			tk++;
 		}
-		g_super.cmds[j]->tokens[i] = '\0';
-		g_super.cmds[j + 1] = 0;
 	}
 	else
 	{
-		g_super.cmds = malloc(sizeof(char *) + 1);
-		g_super.cmds[0]->tokens = g_super.full_tokens;
+		allocate_cmds();
+		g_super.cmds[0].tokens = g_super.full_tokens;
 	}
+	free(g_super.full_tokens);
 }

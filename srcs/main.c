@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/18 17:41:44 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:07:20 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ t_super		g_super;
 
 static void	print_cmds(void)
 {
-	for (int i = 0; g_super.cmds[i]; i++)
+	for (int i = 0; g_super.cmds; i++)
 	{
 		printf("cmd set %i\n", i);
 		int	j = 0;
-		while (g_super.cmds[i]->tokens[j])
+		while (g_super.cmds[i].tokens[j])
 		{
-			printf("%s\n", g_super.cmds[i]->tokens[j]);
+			printf("%s\n", g_super.cmds[i].tokens[j]);
 			j++;
 		}
 	}
@@ -73,6 +73,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			g_super.full_tokens = make_tokens(line);
+			parse_token();
 			print_cmds();
 			if (is_builtin(g_super.full_tokens) < 0)
 				executor(g_super.full_tokens);
