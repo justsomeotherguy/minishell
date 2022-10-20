@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/19 16:07:20 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:01:30 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,23 @@ t_super		g_super;
 
 static void	print_cmds(void)
 {
-	for (int i = 0; g_super.cmds; i++)
+	t_cmdset	*temp;
+	int			i;
+	int			j;
+
+	temp = g_super.cmds;
+	i = 0;
+	j = 0;
+	while (temp)
 	{
-		printf("cmd set %i\n", i);
-		int	j = 0;
-		while (g_super.cmds[i].tokens[j])
+		while (temp->tokens[j])
 		{
-			printf("%s\n", g_super.cmds[i].tokens[j]);
+			printf("cmd set %i, token %s\n", i, temp->tokens[j]);
 			j++;
 		}
+		temp = temp->next;
+		j = 0;
+		i++;
 	}
 }
 
@@ -64,8 +72,8 @@ int	main(int argc, char **argv, char **envp)
 	set_env(envp);
 	while (1)
 	{
-		signal(SIGINT, sig_handler_int);
-		signal(SIGQUIT, SIG_IGN);
+//		signal(SIGINT, sig_handler_int);
+//		signal(SIGQUIT, SIG_IGN);
 		line = readline(get_prompt());
 		if (!line)
 			printf("Empty line");
@@ -78,6 +86,8 @@ int	main(int argc, char **argv, char **envp)
 			if (is_builtin(g_super.full_tokens) < 0)
 				executor(g_super.full_tokens);
 		}
+		free_cmds(&g_super.cmds);
+		free_2d_array(g_super.full_tokens);
 		free(line);
 	}
 //	rl_clear_history();

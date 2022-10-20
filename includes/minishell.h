@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/19 15:47:33 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:39:33 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_cmdset
 	int					pid;
 	int					fd_in;
 	int					fd_out;
+	struct s_cmdset		*next;
 }	t_cmdset;
 
 /* token.c */
@@ -86,12 +87,20 @@ t_envar		*find_env(t_envar *envars, char *name);
 /* execute.c */
 void		executor(char **tokens);
 
+/* free.c */
+void		free_cmds(t_cmdset **cmdsets);
+
 /* init_main.c */
 void		init_super(void);
 char		**set_builtin(char **builtin);
 
 /* parse_token.c */
 void		parse_token(void);
+
+/* parse_token_utils.c */
+t_cmdset	*new_cmdset(void);
+void		add_cmdset(t_cmdset **cmdset, t_cmdset *new);
+t_cmdset	*to_last_cmdset(t_cmdset *cmdset);
 
 /* sig.c */
 void		sig_handler_int(int sig_num);
