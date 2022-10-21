@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/20 15:39:33 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:23:54 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void		executor(char **tokens);
 
 /* free.c */
 void		free_cmds(t_cmdset **cmdsets);
+void		free_2d_array(char **array);
 
 /* init_main.c */
 void		init_super(void);
@@ -109,7 +110,6 @@ void		sig_handler_quit(int sig_num);
 /* utils.c */
 int			ft_strcmp(char *s1, char *s2);
 int			is_meta(char c, char next);
-void		free_2d_array(char **array);
 
 /* path.c */
 char		**init_pathlist(void);

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 15:33:37 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/20 15:38:07 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:23:36 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,15 @@ void	free_cmds(t_cmdset **cmdsets)
 		free(temp);
 		temp = next;
 	}
+	*cmdsets = NULL;
+}
+
+void	free_2d_array(char **array)
+{
+	int		i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
 }

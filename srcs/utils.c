@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:29:59 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/07 12:37:56 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:08:37 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,4 @@ int	is_meta(char c, char next)
 	else if (c == '|' || c == '<' || c == '>')
 		return (1);
 	return (0);
-}
-
-void	free_2d_array(char **array)
-{
-	if (array)
-	{
-		free_2d_array(array + 1);
-		free(array);
-	}
 }
