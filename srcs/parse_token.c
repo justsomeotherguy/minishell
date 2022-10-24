@@ -6,23 +6,13 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:55:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/21 14:35:56 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:21:44 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_super	g_super;
-
-static int	set_filein(char *filein)
-{
-	
-}
-
-static int	set_fileout(char *fileout)
-{
-
-}
 
 static int	count_tokens(int pos)
 {
