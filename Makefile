@@ -39,6 +39,7 @@ FILES = main.c \
 		token.c \
 		utils.c \
 		path.c \
+		here_doc.c \
 
 OBJS_NAME = $(FILES:.c=.o)
 
