@@ -40,6 +40,7 @@ typedef struct s_super
 	char				**full_tokens;
 	struct s_cmdset		*cmds;
 	int					status;
+	char				*heredoc;
 }	t_super;
 
 typedef struct s_envar
@@ -116,5 +117,8 @@ int			is_meta(char c, char next);
 /* path.c */
 char		**init_pathlist(void);
 char		*get_path_for_cmd(char **pathlst, char const *cmd);
+
+/* heredoc */
+int			get_heredoc(void);
 
 #endif
