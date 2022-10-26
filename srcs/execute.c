@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/24 16:37:37 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:44:03 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,21 @@
 
 extern t_super	g_super;
 
-static int	set_filein(char *filein)
+static int	set_filein(t_cmdset *current, char *filein)
 {
 	int		f_in;
+	int		i;
+	char	**trim;
 
 	f_in = open(filein, O_RDONLY);
+	while (current->tokens)
+		i++;
+	trim = (char **)malloc(sizeof(char *) * (i - 1));
+
 	return (f_in);
 }
 
-static int	set_fileout(char *fileout)
+static int	set_fileout(t_cmdset *current, char *fileout)
 {
 	int		f_out;
 
@@ -39,7 +45,7 @@ static void	do_process(char **paths, t_cmdset *current, int *fd)
 		if (dup2(current->fd_in, STDIN_FILENO) == -1)
 		{
 			printf("in dup error\n");
-			return (1);
+			return ;
 		}
 		close(current->fd_in);
 	}
@@ -48,10 +54,12 @@ static void	do_process(char **paths, t_cmdset *current, int *fd)
 		if (dup2(current->fd_out, STDOUT_FILENO) == -1)
 		{
 			printf("out dup error\n");
-			return (1);
+			return ;
 		}
 		close(current->fd_out);
-	}	
+	}
+	if (is_builtin(current->tokens) >= 0)
+		do_builtin(is_builtin(current->tokens), current->tokens);
 	if (!paths)
 	{
 		printf("Unable to build PATH\n");
@@ -68,6 +76,7 @@ static void	do_process(char **paths, t_cmdset *current, int *fd)
 		printf("Unable to execute command\n");
 		exit(1);
 	}
+	exit(0);
 }
 
 static t_cmdset	*has_redirect(void)
@@ -90,22 +99,33 @@ void	executor(void)
 		while (current->tokens[j])
 		{
 			if (ft_strcmp(current->tokens[j], "<") == 0)
+			{
 				if (current->tokens[j + 1])
-					set_filein(current->tokens[j + 1]);
+					set_filein(current, current->tokens[j + 1]);
+			}
 			else if (ft_strcmp(current->tokens[j], ">") == 0)
+			{
 				if (current->tokens[j + 1])
-					set_fileout(current->tokens[j + 1]);
+					set_fileout(current, current->tokens[j + 1]);
+			}
+			j++;
 		}
 		fd[0] = current->fd_in;
 		fd[1] = current->fd_out;
 		if (pipe(fd) == -1)
 			printf("Pipe Error");
 		current->pid = fork();
-		if (current->pid == -1)
+		if (current->pid < 0)
+		{
+			close(fd[0]);
+			close(fd[1]);
 			printf("Fork Error");
-		if (pid == 0)
-			do_process(paths, current->tokens, fd);
+			return ;
+		}
+		if (current->pid == 0)
+			do_process(paths, current, fd);
 		if (waitpid(current->pid, NULL, 0) < 0)
-		printf("Process error\n");
+			printf("Process error\n");
+		current = current->next;
 	}
 }

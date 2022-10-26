@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/24 15:56:10 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/10/26 13:43:30 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void		find_and_remove(t_envar *envars, char *var_name);
 t_envar		*find_env(t_envar *envars, char *name);
 
 /* execute.c */
-void		executor(char **tokens);
+void		executor(void);
 
 /* free.c */
 void		free_cmds(t_cmdset **cmdsets);
