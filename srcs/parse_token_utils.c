@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:05:16 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/20 14:40:36 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:29:32 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ t_cmdset	*new_cmdset(void)
 	new = (t_cmdset *)malloc(sizeof(t_cmdset));
 	if (!new)
 		return (NULL);
-	new->fd_in = 0;
-	new->fd_out = 1;
-	new->pid = -1;
+	new->fd_in = STDIN_FILENO;
+	new->fd_out = STDOUT_FILENO;
 	new->tokens = NULL;
 	new->next = NULL;
 	return (new);
