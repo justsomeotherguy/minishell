@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/26 15:13:07 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:30:23 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	main(int argc, char **argv, char **envp)
 	set_env(envp);
 	while (1)
 	{
-//		signal(SIGINT, sig_handler_int);
-//		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, sig_handler_int);
+		signal(SIGQUIT, SIG_IGN);
 		line = readline(get_prompt());
 		if (!line)
 			printf("Empty line");
@@ -89,6 +89,6 @@ int	main(int argc, char **argv, char **envp)
 		free_2d_array(g_super.full_tokens);
 		free(line);
 	}
-//	rl_clear_history();
+	rl_clear_history();
 	return (0);
 }
