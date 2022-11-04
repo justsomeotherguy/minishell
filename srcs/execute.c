@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/02 15:27:43 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:33:52 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,12 @@ static int	set_fileout_over(t_cmdset *current, char *fileout)
 	j = 0;
 	while (current->tokens[j])
 	{
-		printf("filout token %s\n", current->tokens[j]);
 		if (ft_strcmp(current->tokens[j], ">") == 0)
 			j += 2;
 		if (current->tokens[j])
 			trim[i] = ft_strdup(current->tokens[j]);
 		else
 			break ;
-		printf("trim filout token %s\n", trim[i]);
 		i++;
 		j++;
 	}
@@ -85,7 +83,6 @@ static int	set_fileout_app(t_cmdset *current, char *fileout)
 	int		j;
 	char	**trim;
 
-	printf("set file append\n");
 	f_out = open(fileout, O_WRONLY | O_APPEND | O_CREAT, 0777);
 	i = 0;
 	j = 0;
@@ -95,14 +92,12 @@ static int	set_fileout_app(t_cmdset *current, char *fileout)
 	j = 0;
 	while (current->tokens[j])
 	{
-		printf("filout token %s\n", current->tokens[j]);
 		if (ft_strcmp(current->tokens[j], ">>") == 0)
 			j += 2;
 		if (current->tokens[j])
 			trim[i] = ft_strdup(current->tokens[j]);
 		else
 			break ;
-		printf("trim filout token %s\n", trim[i]);
 		i++;
 		j++;
 	}
@@ -131,9 +126,9 @@ static void	pipe_proc(t_cmdset *current, int *fd)
 	if (execve(exec_path, current->tokens, NULL) == -1)
 	{
 		printf("Unable to execute command\n");
-		return ;
+		exit(1) ;
 	}
-	return ;
+	exit(0) ;
 }
 
 /*
@@ -207,7 +202,8 @@ static int	set_fd_out(t_cmdset *current)
 		{
 			if (current->tokens[j + 1])
 			{	
-				current->fd_out = set_fileout_app(current, current->tokens[j + 1]);
+				current->fd_out = set_fileout_app(current,
+						current->tokens[j + 1]);
 				return (1);
 			}
 		}
@@ -215,7 +211,8 @@ static int	set_fd_out(t_cmdset *current)
 		{
 			if (current->tokens[j + 1])
 			{	
-				current->fd_out = set_fileout_over(current, current->tokens[j + 1]);
+				current->fd_out = set_fileout_over(current,
+						current->tokens[j + 1]);
 				return (1);
 			}
 		}
@@ -232,13 +229,8 @@ void	executor(void)
 	int			pid;
 
 	current = g_super.cmds;
-	while (current)
-	{
-		if (is_builtin(current->tokens) >= 0)
-		{
-			do_builtin(is_builtin(current->tokens), current->tokens);
-			return ;
-		}		
+	while (current != NULL)
+	{	
 		if (set_fd_in(current) == 1)
 		{
 			if (dup2(current->fd_in, STDIN_FILENO) == -1)
@@ -248,17 +240,22 @@ void	executor(void)
 		set_fd_out(current);
 		if (pipe(fd) == -1)
 			return ;
-		pid = fork();
-		if (pid == -1)
-			return ;
-		if (pid == 0)
-			pipe_proc(current, fd);
+		if (is_builtin(current->tokens) > 0)
+			do_builtin(is_builtin(current->tokens), current->tokens);
 		else
 		{
-			close(fd[0]);
-			close(fd[1]);
+			pid = fork();
+			if (pid == -1)
+				return ;
+			if (pid == 0)
+				pipe_proc(current, fd);
+			else
+			{
+				close(fd[0]);
+				close(fd[1]);
+			}
+			waitpid(pid, NULL, 0);
 		}
-		waitpid(pid, NULL, 0);
 		current = current->next;
 	}
 }

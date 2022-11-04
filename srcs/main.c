@@ -6,35 +6,13 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/03 16:30:23 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:48:24 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_super		g_super;
-
-static void	print_cmds(void)
-{
-	t_cmdset	*temp;
-	int			i;
-	int			j;
-
-	temp = g_super.cmds;
-	i = 0;
-	j = 0;
-	while (temp)
-	{
-		while (temp->tokens[j])
-		{
-			printf("cmd set %i, token %s\n", i, temp->tokens[j]);
-			j++;
-		}
-		temp = temp->next;
-		j = 0;
-		i++;
-	}
-}
 
 static char	*get_prompt(void)
 {
@@ -76,13 +54,12 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGQUIT, SIG_IGN);
 		line = readline(get_prompt());
 		if (!line)
-			printf("Empty line");
+			write(1, "\n", 1);
 		else
 		{
 			add_history(line);
 			g_super.full_tokens = make_tokens(line);
 			parse_token();
-			print_cmds();
 			executor();
 		}
 		free_cmds(&g_super.cmds);

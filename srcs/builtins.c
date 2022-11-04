@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:39:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/13 14:19:44 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:34:30 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ int	is_builtin(char **tokens)
 		while (g_super.builtins[j])
 		{
 			if (ft_strcmp(tokens[i], g_super.builtins[j]) == 0)
-			{
-				printf("line has %s\n", g_super.builtins[j]);
-				do_builtin(j, tokens);
 				return (j);
-			}
 			j++;
 		}
 		i++;
@@ -73,4 +69,3 @@ void	do_builtin(int builtin_id, char **tokens)
 	if (builtin_id == 6)
 		exit(0);
 }
-

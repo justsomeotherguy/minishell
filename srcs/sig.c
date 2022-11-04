@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:41:45 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/03 14:19:00 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:14:07 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	sig_handler_int(int sig_num)
 {
 	(void)sig_num;
-	write(2, "\n", 1);
-	rl_replace_line("", 0); //(Issues with library linking)
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }
