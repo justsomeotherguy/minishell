@@ -6,7 +6,7 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/11/03 16:30:26 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/11/08 15:42:48 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ FILES = main.c \
 		envvars.c \
 		envvarutils.c \
 		execute.c \
+		execute_setfds.c \
 		free.c \
 		init_main.c \
 		parse_token.c \

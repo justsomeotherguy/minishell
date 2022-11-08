@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/03 14:34:03 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:42:29 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ t_envar		*find_env(t_envar *envars, char *name);
 
 /* execute.c */
 void		executor(void);
+
+/* execute_setfds.c */
+int			set_filein(t_cmdset *current, char *filein);
+int			set_fileout(t_cmdset *current, char *fileout, int set);
+int			set_fd_in(t_cmdset *current);
+int			set_fd_out(t_cmdset *current);
 
 /* free.c */
 void		free_cmds(t_cmdset **cmdsets);

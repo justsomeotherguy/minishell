@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/04 15:33:52 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:59:45 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,107 +14,17 @@
 
 extern t_super	g_super;
 
-static int	set_filein(t_cmdset *current, char *filein)
-{
-	int		f_in;
-	int		i;
-	int		j;
-	char	**trim;
-
-	f_in = open(filein, O_RDONLY);
-	i = 0;
-	j = 0;
-	while (current->tokens)
-		j++;
-	trim = (char **)malloc(sizeof(char *) * (j - 1));
-	j = 0;
-	while (current->tokens[j] && trim[i])
-	{
-		if (ft_strcmp(current->tokens[j], "<") == 0)
-			j += 2;
-		if (current->tokens[j])
-			trim[i] = ft_strdup(current->tokens[j]);
-		else
-			break ;
-		i++;
-		j++;
-	}
-	trim[i] = 0;
-	free_2d_array(current->tokens);
-	current->tokens = trim;
-	return (f_in);
-}
-
-static int	set_fileout_over(t_cmdset *current, char *fileout)
-{
-	int		f_out;
-	int		i;
-	int		j;
-	char	**trim;
-
-	f_out = open(fileout, O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	i = 0;
-	j = 0;
-	while (current->tokens[j])
-		j++;
-	trim = (char **)malloc(sizeof(char *) * (j - 1));
-	j = 0;
-	while (current->tokens[j])
-	{
-		if (ft_strcmp(current->tokens[j], ">") == 0)
-			j += 2;
-		if (current->tokens[j])
-			trim[i] = ft_strdup(current->tokens[j]);
-		else
-			break ;
-		i++;
-		j++;
-	}
-	trim[i] = 0;
-	free_2d_array(current->tokens);
-	current->tokens = trim;
-	return (f_out);
-}
-
-static int	set_fileout_app(t_cmdset *current, char *fileout)
-{
-	int		f_out;
-	int		i;
-	int		j;
-	char	**trim;
-
-	f_out = open(fileout, O_WRONLY | O_APPEND | O_CREAT, 0777);
-	i = 0;
-	j = 0;
-	while (current->tokens[j])
-		j++;
-	trim = (char **)malloc(sizeof(char *) * (j - 1));
-	j = 0;
-	while (current->tokens[j])
-	{
-		if (ft_strcmp(current->tokens[j], ">>") == 0)
-			j += 2;
-		if (current->tokens[j])
-			trim[i] = ft_strdup(current->tokens[j]);
-		else
-			break ;
-		i++;
-		j++;
-	}
-	trim[i] = 0;
-	free_2d_array(current->tokens);
-	current->tokens = trim;
-	return (f_out);
-}
-
-
 static void	pipe_proc(t_cmdset *current, int *fd)
 {
 	char	**paths;
 	char	*exec_path;
 
 	paths = init_pathlist();
+	if (!paths)
+		exit(1);
 	exec_path = get_path_for_cmd(paths, current->tokens[0]);
+	if (!exec_path)
+		exit(1);
 	if (current->fd_in != 0)
 		dup2(current->fd_in, STDIN_FILENO);
 	if (current->fd_out != 1)
@@ -126,9 +36,9 @@ static void	pipe_proc(t_cmdset *current, int *fd)
 	if (execve(exec_path, current->tokens, NULL) == -1)
 	{
 		printf("Unable to execute command\n");
-		exit(1) ;
+		exit(1);
 	}
-	exit(0) ;
+	exit(0);
 }
 
 /*
@@ -170,57 +80,6 @@ static void	do_process(char **paths, t_cmdset *current, int *fd)
 	return ;
 }
 */
-
-static int	set_fd_in(t_cmdset *current)
-{
-	int		j;
-
-	j = 0;
-	while (current->tokens[j])
-	{
-		if (ft_strcmp(current->tokens[j], "<") == 0)
-		{
-			if (current->tokens[j + 1])
-			{	
-				current->fd_in = set_filein(current, current->tokens[j + 1]);
-				return (1);
-			}
-		}
-		j++;
-	}
-	return (0);
-}
-
-static int	set_fd_out(t_cmdset *current)
-{
-	int		j;
-
-	j = 0;
-	while (current->tokens[j])
-	{	
-		if (ft_strncmp(current->tokens[j], ">>", 2) == 0)
-		{
-			if (current->tokens[j + 1])
-			{	
-				current->fd_out = set_fileout_app(current,
-						current->tokens[j + 1]);
-				return (1);
-			}
-		}
-		else if (ft_strncmp(current->tokens[j], ">", 1) == 0)
-		{
-			if (current->tokens[j + 1])
-			{	
-				current->fd_out = set_fileout_over(current,
-						current->tokens[j + 1]);
-				return (1);
-			}
-		}
-
-		j++;
-	}
-	return (0);
-}
 
 void	executor(void)
 {

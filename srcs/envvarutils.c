@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 16:31:15 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/07 12:48:21 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:52:30 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,14 @@ environment variable node else return NULL.
 */
 t_envar	*find_env(t_envar *envars, char *name)
 {
-	while (envars)
+	t_envar		*temp;
+
+	temp = envars;
+	while (temp)
 	{
-		if (ft_strcmp(envars->name, name) == 0)
-			return (envars);
-		envars = envars->next;
+		if (ft_strcmp(temp->name, name) == 0)
+			return (temp);
+		temp = temp->next;
 	}
 	return (NULL);
 }

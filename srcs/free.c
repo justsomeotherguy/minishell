@@ -6,11 +6,11 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 15:33:37 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/21 14:23:36 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:18:14 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "minishell.h"
+#include "minishell.h"
 
 void	free_cmds(t_cmdset **cmdsets)
 {

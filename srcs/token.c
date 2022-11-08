@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/19 14:12:36 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:59:31 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ void	expand_tokens(char **tokens)
 			if (tokens[i][j] == '$')
 			{
 				test = find_env(g_super.envar, (tokens[i] + 1));
-				if (test != NULL)
+				printf("Expand token data %s\n", (char *)test->data);
+				if (test)
 					tokens[i] = (char *)test->data;
 			}
 			j++;
