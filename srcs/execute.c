@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/08 15:59:45 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:59:05 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,7 @@ void	executor(void)
 	current = g_super.cmds;
 	while (current != NULL)
 	{	
-		if (set_fd_in(current) == 1)
-		{
-			if (dup2(current->fd_in, STDIN_FILENO) == -1)
-				return ;
-			close(current->fd_in);
-		}
+		set_fd_in(current);
 		set_fd_out(current);
 		if (pipe(fd) == -1)
 			return ;

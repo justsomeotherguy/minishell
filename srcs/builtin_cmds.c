@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/04 14:08:33 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/10 13:56:06 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	builtin_export(char **tokens)
 void	builtin_pwd(void)
 {
 	printf("%s\n", (char *)find_env(g_super.envar, "PWD")->data);
+	g_super.status = 0;
 }
 
 /*
@@ -50,11 +51,6 @@ void	builtin_echo(char **tokens)
 
 	i = 1;
 	option = 0;
-	if (!tokens[1])
-	{
-		write(1, "\n", 1);
-		return ;
-	}
 	if (ft_strcmp(tokens[1], "-n") == 0)
 	{
 		i++;
@@ -69,6 +65,7 @@ void	builtin_echo(char **tokens)
 	}
 	if (option != 1)
 		write(1, "\n", 1);
+	g_super.status = 0;
 	return ;
 }
 

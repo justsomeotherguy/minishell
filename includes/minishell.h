@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/08 15:42:29 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/10 13:27:11 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/types.h>
 
 # include <signal.h>
+# include <sys/ioctl.h>
 
 # include <fcntl.h>
 

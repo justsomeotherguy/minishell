@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:15:49 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/08 16:31:13 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:21:23 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	char	**trim_tokens(t_cmdset *current, char *redirector)
 		j++;
 	trim = (char **)malloc(sizeof(char *) * (j - 1));
 	j = 0;
-	while (temp->tokens[j] && trim[i])
+	while (temp->tokens[j])
 	{
 		if (ft_strncmp(temp->tokens[j], redirector, ft_strlen(redirector)) == 0)
 			j += 2;
@@ -48,6 +48,7 @@ int	set_filein(t_cmdset *current, char *filein)
 	int		f_in;
 	char	**trim;
 
+	f_in = open(filein, O_RDONLY);
 	trim = trim_tokens(current, "<");
 	free_2d_array(current->tokens);
 	current->tokens = trim;
@@ -75,7 +76,8 @@ int	set_fileout(t_cmdset *current, char *fileout, int set)
 		current->tokens = trim;
 		return (f_out);
 	}
-	return (1);
+	else
+		return (1);
 }
 
 int	set_fd_in(t_cmdset *current)
@@ -87,7 +89,7 @@ int	set_fd_in(t_cmdset *current)
 	j = 0;
 	while (temp->tokens[j])
 	{
-		if (ft_strcmp(temp->tokens[j], "<") == 0)
+		if (ft_strncmp(temp->tokens[j], "<", 1) == 0)
 		{
 			if (temp->tokens[j + 1])
 			{	
