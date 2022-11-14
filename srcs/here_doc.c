@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:28:54 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/10 13:28:56 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:18:49 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_heredoc(void)
 	char	*line;
 	int		fd;
 
-	fd = open("/tmp/.heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open("/tmp/.heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 		return (1);
 	while (1)
