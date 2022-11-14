@@ -6,7 +6,7 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/11/08 15:42:48 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/11/14 16:09:05 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ FILES = main.c \
 		parse_token_utils.c \
 		sig.c \
 		token.c \
+		token_utils.c \
 		utils.c \
 		path.c \
 		here_doc.c \

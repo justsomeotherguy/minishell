@@ -6,13 +6,13 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:39:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/04 15:34:30 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:35:18 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern	t_super	g_super;
+extern t_super	g_super;
 
 /*
 Check input tokens to verify if they match any of the builtin commands,

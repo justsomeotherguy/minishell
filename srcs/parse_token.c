@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:55:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/24 16:21:44 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:43:56 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,25 @@ static int	count_tokens(int pos)
 	return (i);
 }
 
-void	parse_token(void)
+static void	do_parsing(t_cmdset *temp)
 {
-	t_cmdset	*temp;
-	int			tk;
-	int			i;
+	int		tk;
+	int		i;
 
 	tk = 0;
 	i = 0;
-	temp = new_cmdset();
-	temp->tokens = (char **)malloc(sizeof(char *) * (count_tokens(tk) + 1));
 	while (g_super.full_tokens[tk])
 	{
-		if (ft_strcmp(g_super.full_tokens[tk], "|") == 0)
+		if (ft_strncmp(g_super.full_tokens[tk], "|", 1) == 0)
 		{
 			temp->tokens[i] = 0;
 			add_cmdset(&g_super.cmds, temp);
 			temp = new_cmdset();
-			temp->tokens = (char **)malloc(sizeof(char *)
-					* (count_tokens(tk + 1) + 1));
+			temp->tokens = malloc(sizeof(char *) * (count_tokens(tk + 1) + 1));
 			i = 0;
 		}
 		else
-		{
+		{	
 			temp->tokens[i] = ft_strdup(g_super.full_tokens[tk]);
 			i++;
 		}
@@ -59,4 +55,18 @@ void	parse_token(void)
 	}
 	temp->tokens[i] = 0;
 	add_cmdset(&g_super.cmds, temp);
+	return ;
+}
+
+void	parse_token(void)
+{
+	t_cmdset	*temp;
+	int			tk;
+	int			i;
+
+	tk = 0;
+	temp = new_cmdset();
+	temp->tokens = malloc(sizeof(char *) * (count_tokens(tk) + 1));
+	do_parsing(temp);
+	return ;
 }
