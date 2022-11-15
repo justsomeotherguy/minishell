@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/14 16:27:18 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:00:05 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,72 @@ char	**make_tokens(char *line)
 	return (tokens);
 }
 
+static char	*get_envar(char *getname)
+{
+	t_envar	*temp;
+
+	temp = find_env(g_super.envar, getname);
+	if (temp)
+		return ((char *)ft_strdup(temp->data));
+	else
+		return ("");
+}
+
+static int	get_envarname_length(char *token)
+{
+	int		i;
+
+	i = 0;
+	while (token[i] != '\0' && token[i] != ' ')
+		i++;
+	return (i);
+}
+
+static char	*expand_str(char *token, int pos)
+{
+	int		i;
+	int		j;
+	char	*str;
+	char	*new;
+
+	i = 0;
+	j = 0;
+	str = get_envar((ft_strchr(token, '$') + 1));
+	if (str)
+		new = malloc(sizeof(char) * (((ft_strlen(token) + 1) + (ft_strlen(str)))
+					- (get_envarname_length(ft_strchr(token, '$') + 1))));
+	else
+		new = malloc(sizeof(char) * ((ft_strlen(token) + 1)
+					- (ft_strlen(ft_strchr(token, '$')))));
+	while (token[i])
+	{
+		if (token[i] == '$')
+		{
+			if (str)
+			{
+				while (str[j] != '\0')
+				{
+					new[i] = str[j];
+					i++;
+					j++;
+				}
+			}
+			else
+			{
+				new[i] = ' ';
+				j++;
+			}
+		}
+		new[i + j] = token[i];
+		i++;
+	}
+	new[i + j] = '\0';
+	free(token);
+	if (str)
+		free(str);
+	return (new);
+}
+
 /*
 Checks tokens if $ character is within it.
 Checks name after $ against environment variables and replaces token with
@@ -140,11 +206,11 @@ void	expand_tokens(char **tokens)
 		{
 			if (tokens[i][j] == '$')
 			{
-				test = find_env(g_super.envar, (tokens[i] + 1));
-				if (test)
-					tokens[i] = ft_strdup((char *)test->data);
+				tokens[i] = expand_str(tokens[i], j);
+				i = 0;
 			}
 			j++;
 		}
 	}
 }
+

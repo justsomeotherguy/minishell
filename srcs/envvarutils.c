@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 16:31:15 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/10 13:14:38 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/15 23:54:13 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ t_envar	*find_env(t_envar *envars, char *name)
 	t_envar		*temp;
 
 	temp = envars;
-	while (temp)
+	while (temp != NULL)
 	{
-		if (ft_strncmp(temp->name, name, ft_strlen(name)) == 0)
+		if (ft_strcmp(temp->name, name) == 0)
 			return (temp);
 		temp = temp->next;
 	}
