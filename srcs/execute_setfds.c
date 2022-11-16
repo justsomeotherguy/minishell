@@ -43,16 +43,28 @@ static	char	**trim_tokens(t_cmdset *current, char *redirector)
 	return (trim);
 }
 
-int	set_filein(t_cmdset *current, char *filein)
+int	set_filein(t_cmdset *current, char *filein, int set)
 {
 	int		f_in;
 	char	**trim;
 
-	f_in = open(filein, O_RDONLY);
-	trim = trim_tokens(current, "<");
-	free_2d_array(current->tokens);
-	current->tokens = trim;
-	return (f_in);
+	if (set == 0)
+	{
+		f_in = open(filein, O_RDONLY);
+		trim = trim_tokens(current, "<");
+		free_2d_array(current->tokens);
+		current->tokens = trim;
+		return (f_in);
+	}
+	else if (set == 1)
+	{
+		f_in = get_heredoc(filein);
+		trim = trim_tokens(current, "<<");
+		free_2d_array(current->tokens);
+		current->tokens = trim;
+		return (f_in);
+	}
+	return (0);
 }
 
 int	set_fileout(t_cmdset *current, char *fileout, int set)
@@ -89,13 +101,15 @@ int	set_fd_in(t_cmdset *current)
 	j = 0;
 	while (temp->tokens[j])
 	{
-		if (ft_strncmp(temp->tokens[j], "<", 1) == 0)
-		{
-			if (temp->tokens[j + 1])
-			{	
-				temp->fd_in = set_filein(temp, temp->tokens[j + 1]);
+		if (ft_strncmp(temp->tokens[j], "<<", 2) == 0 && temp->tokens[j + 1])
+			{
+				temp->fd_in = set_filein(temp, temp->tokens[j + 1], 1);
 				return (1);
 			}
+		else if (ft_strncmp(temp->tokens[j], "<", 1) == 0 && temp->tokens[j + 1])
+		{
+				temp->fd_in = set_filein(temp, temp->tokens[j + 1], 0);
+				return (1);
 		}
 		j++;
 	}

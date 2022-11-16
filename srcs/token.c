@@ -191,6 +191,17 @@ static char	*expand_str(char *token, int pos)
 	return (new);
 }
 
+static int	trimquotes(char **tokens, int i) {
+	if (tokens[i][0] == '\'')
+	{
+		tokens[i] = ft_strtrim(tokens[i], "\'");
+		i++;
+	}
+	if (tokens[i][0] == '\"')
+		tokens[i] = ft_strtrim(tokens[i], "\"");
+	return (i);
+}
+
 /*
 Checks tokens if $ character is within it.
 Checks name after $ against environment variables and replaces token with
@@ -200,18 +211,14 @@ void	expand_tokens(char **tokens)
 {
 	int		i;
 	int		j;
-	t_envar	*test;
+	//t_envar	*test;
 
 	i = -1;
 	while (tokens[++i])
 	{
 		j = 0;
-		if (tokens[i][0] == '\'')
-		{
-			tokens[i] = ft_strtrim(tokens[i], "\'");
-			i++;
-		}
-		while (tokens[i][j] != '\0')
+		i = trimquotes(tokens, i);
+		while (tokens[i] && tokens[i][j] != '\0')
 		{
 			if (tokens[i][j] == '$')
 			{
@@ -223,4 +230,3 @@ void	expand_tokens(char **tokens)
 		}
 	}
 }
-

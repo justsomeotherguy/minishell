@@ -14,7 +14,7 @@
 
 t_super		g_super;
 
-int	get_heredoc(void)
+int	get_heredoc(char *end)
 {
 	char	*line;
 	int		fd;
@@ -27,7 +27,7 @@ int	get_heredoc(void)
 		line = readline("heredoc> ");
 		if (!line)
 			return (1);
-		if (ft_strcmp(line, g_super.heredoc) == 0)
+		if (ft_strcmp(line, end) == 0)
 			break ;
 		write(fd, line, ft_strlen(line));
 	}

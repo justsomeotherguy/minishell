@@ -95,7 +95,7 @@ t_envar		*find_env(t_envar *envars, char *name);
 void		executor(void);
 
 /* execute_setfds.c */
-int			set_filein(t_cmdset *current, char *filein);
+int			set_filein(t_cmdset *current, char *filein, int set);
 int			set_fileout(t_cmdset *current, char *fileout, int set);
 int			set_fd_in(t_cmdset *current);
 int			set_fd_out(t_cmdset *current);
@@ -129,6 +129,6 @@ char		**init_pathlist(void);
 char		*get_path_for_cmd(char **pathlst, char const *cmd);
 
 /* heredoc */
-int			get_heredoc(void);
+int			get_heredoc(char *end);
 
 #endif
