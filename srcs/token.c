@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/16 00:00:05 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:21:44 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ static char	*get_envar(char *getname)
 	if (temp)
 		return ((char *)ft_strdup(temp->data));
 	else
-		return ("");
+		return (ft_strdup(""));
 }
 
 static int	get_envarname_length(char *token)
@@ -144,41 +144,47 @@ static char	*expand_str(char *token, int pos)
 {
 	int		i;
 	int		j;
+	int		k;
 	char	*str;
 	char	*new;
 
 	i = 0;
 	j = 0;
+	k = 0;
 	str = get_envar((ft_strchr(token, '$') + 1));
 	if (str)
-		new = malloc(sizeof(char) * (((ft_strlen(token) + 1) + (ft_strlen(str)))
-					- (get_envarname_length(ft_strchr(token, '$') + 1))));
+		printf("str - %s\n", str);
 	else
-		new = malloc(sizeof(char) * ((ft_strlen(token) + 1)
-					- (ft_strlen(ft_strchr(token, '$')))));
+		printf("nothing here\n");
+	new = malloc(sizeof(char) * (ft_strlen(token)
+				- get_envarname_length(ft_strchr(token, '$') + 1))
+			+ ft_strlen(str));
 	while (token[i])
 	{
 		if (token[i] == '$')
 		{
-			if (str)
+			if (ft_strlen(str) > 0)
 			{
 				while (str[j] != '\0')
 				{
-					new[i] = str[j];
-					i++;
+					new[k] = str[j];
+					k++;
 					j++;
 				}
+				i += get_envarname_length(token + i);
 			}
 			else
 			{
-				new[i] = ' ';
-				j++;
+				new[k] = ' ';
+				k++;
+				i += get_envarname_length(token + i);
 			}
 		}
-		new[i + j] = token[i];
+		new[k] = token[i];
 		i++;
+		k++;
 	}
-	new[i + j] = '\0';
+	new[k] = '\0';
 	free(token);
 	if (str)
 		free(str);
@@ -200,14 +206,18 @@ void	expand_tokens(char **tokens)
 	while (tokens[++i])
 	{
 		j = 0;
-		if (tokens[i][j] == '\'')
-			continue ;
+		if (tokens[i][0] == '\'')
+		{
+			tokens[i] = ft_strtrim(tokens[i], "\'");
+			i++;
+		}
 		while (tokens[i][j] != '\0')
 		{
 			if (tokens[i][j] == '$')
 			{
 				tokens[i] = expand_str(tokens[i], j);
-				i = 0;
+				printf("%s\n", tokens[i]);
+				j = -1;
 			}
 			j++;
 		}
