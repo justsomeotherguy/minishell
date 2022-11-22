@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/10 15:59:05 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:01:59 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,21 @@ static void	pipe_proc(t_cmdset *current, int *fd)
 	if (!exec_path)
 		exit(1);
 	if (current->fd_in != 0)
+	{
 		dup2(current->fd_in, STDIN_FILENO);
+		close(current->fd_in);
+	}
+	else
+	{
+		close(fd[0]);
+	}
 	if (current->fd_out != 1)
+	{
 		dup2(current->fd_out, STDOUT_FILENO);
+		close(current->fd_out);
+	}
 	close(fd[0]);
 	close(fd[1]);
-	if (current->fd_out != 1)
-		close(current->fd_out);
 	if (execve(exec_path, current->tokens, NULL) == -1)
 	{
 		printf("Unable to execute command\n");
@@ -101,14 +109,12 @@ void	executor(void)
 			pid = fork();
 			if (pid == -1)
 				return ;
-			if (pid == 0)
+			else if (pid == 0)
 				pipe_proc(current, fd);
 			else
-			{
-				close(fd[0]);
-				close(fd[1]);
-			}
-			waitpid(pid, NULL, 0);
+				waitpid(pid, NULL, 0);
+			close(fd[0]);
+			close(fd[1]);
 		}
 		current = current->next;
 	}
