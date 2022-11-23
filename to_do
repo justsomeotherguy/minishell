@@ -1,0 +1,15 @@
+to_do
+
+create int_arrays for pipes in cmd list
+change execution function to check if first/last in cmd list
+assign fd for cmd list items, 
+
+  cmd 1:
+  stdin
+  dup2(fd[1], stdout)
+  close(fd[1])
+  
+  cmd 2:
+  dup2(fd[0], stdin)
+  close(fd[0])
+  close(cmd1->fd[0])
