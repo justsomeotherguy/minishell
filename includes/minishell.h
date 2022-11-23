@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/14 16:08:43 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:35:21 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_cmdset
 {
 	char				**tokens;
 	int					pid;
+	int					pipefd[2];
 	int					fd_in;
 	int					fd_out;
 	struct s_cmdset		*next;

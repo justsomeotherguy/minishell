@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/10 13:56:06 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:53:51 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ void	builtin_export(char **tokens)
 		add_env(&g_super.envar, new_env(split[0], split[1]));
 	}
 	free(split);
+	return ;
 }
 
 void	builtin_pwd(void)
 {
 	printf("%s\n", (char *)find_env(g_super.envar, "PWD")->data);
 	g_super.status = 0;
+	return ;
 }
 
 /*
@@ -99,4 +101,5 @@ void	builtin_cd(char **tokens)
 	{
 		printf("chdir error\n");
 	}
+	return ;
 }

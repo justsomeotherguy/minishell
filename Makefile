@@ -6,13 +6,13 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/11/14 16:09:05 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/11/23 16:14:59 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = gcc
+CC = gcc -g
 
 INCL = includes
 INCL_RL = /usr/local/opt/readline/include/
