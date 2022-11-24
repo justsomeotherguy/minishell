@@ -13,3 +13,6 @@ assign fd for cmd list items,
   dup2(fd[0], stdin)
   close(fd[0])
   close(cmd1->fd[0])
+
+Error codes
+Return errors on bad called functions
