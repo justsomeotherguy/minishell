@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 16:34:43 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/24 17:14:18 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,36 @@
 
 extern t_super	g_super;
 
+static int	ft_dup2(int old, int new)
+{
+	if (dup2(old, new) < 0)
+		return (-1);
+	else
+		close(old);
+	return (0);
+}
+
 static void	pipe_exec(t_cmdset *current, int *fd)
 {
 	char	**paths;
 	char	*exec_path;
 
+	close(fd[0]);
+	close(fd[1]);
 	if (is_builtin(current->tokens) > 0)
 		do_builtin(is_builtin(current->tokens), current->tokens);
 	else
 	{
-		close(fd[0]);
-		close(fd[1]);
 		paths = init_pathlist();
 		if (!paths)
-			exit(1);
+			exit(1); // to_do error
 		exec_path = get_path_for_cmd(paths, current->tokens[0]);
 		if (!exec_path)
-			exit(1);
+			exit(1); // to_do error
 		if (execve(exec_path, current->tokens, NULL) == -1)
 		{
 			printf("Unable to execute command\n");
-			exit(1);
+			exit(1); // to_do error
 		}
 	}
 	return ;
@@ -93,56 +102,43 @@ void	exec_single(t_cmdset *current)
 		if (current->pid == 0)
 		{
 			if (set_fd_in(current) == 1)
-			{
-				dup2(current->fd_in, STDIN_FILENO);
-				close(current->fd_in);
-			}	
+				if (ft_dup2(current->fd_in, STDIN_FILENO) < 0)
+					exit(1); // to_do error
 			if (set_fd_out(current) == 1)
-			{
-				dup2(current->fd_out, STDOUT_FILENO);
-				close(current->fd_out);
-			}
+				if (ft_dup2(current->fd_out, STDOUT_FILENO) < 0)
+					exit(1); // to_do error
 			paths = init_pathlist();
 			if (!paths)
-				exit(1);
+				exit(1); // to_do error
 			exec_path = get_path_for_cmd(paths, current->tokens[0]);
 			if (!exec_path)
-				exit(1);
+				exit(1); // to_do error
 			if (execve(exec_path, current->tokens, NULL) == -1)
 			{
 				printf("Unable to execute command\n");
-				exit(1);
+				exit(1); // to_do error
 			}
 		}
 		else
 			waitpid(current->pid, &g_super.status, 0);
 	}
-
 	return ;
 }
 
 static void	set_and_dup(t_cmdset *current, t_cmdset *prev)
 {
 	if (set_fd_in(current) == 1)
-	{
-		dup2(current->fd_in, STDIN_FILENO);
-		close(current->fd_in);
-	}
+		if (ft_dup2(current->fd_in, STDIN_FILENO) < 0)
+			return ; // to_do error
 	else
-	{
-		dup2(current->pipefd[0], STDIN_FILENO);
-		close(current->pipefd[0]);
-	}
+		if (ft_dup2(current->pipefd[0], STDIN_FILENO) < 0)
+			return ; // to_do error
 	if (set_fd_out(current) == 1)
-	{
-		dup2(current->fd_out, STDOUT_FILENO);
-		close(current->fd_out);
-	}
+		if (ft_dup2(current->fd_out, STDOUT_FILENO) < 0)
+			return ; // to_do error
 	else
-	{
-		dup2(current->pipefd[1], STDOUT_FILENO);
-		close(current->pipefd[1]);
-	}
+		if (ft_dup2(current->pipefd[1], STDOUT_FILENO) < 0)
+			return ; // to_do error
 	if (prev)
 	{
 		close(prev->pipefd[0]);
@@ -162,17 +158,14 @@ void	executor(void)
 	{
 		while (current != NULL)
 		{
-			pipe(current->pipefd);
-			set_and_dup(current, prev);
-			current->pid = fork();
+			pipe(current->pipefd); // to_do error
+			current->pid = fork(); // to_do error
+			set_and_dup(current, prev); // to_do error
 			if (current->pid == 0)
-			{
 				pipe_exec(current, current->pipefd);
-			}
-			else
-			{
-				waitpid(current->pid, &g_super.status, 0);
-			}	
+			close(current->pipefd[1]);
+			waitpid(current->pid, &g_super.status, 0);
+			close(current->pipefd[0]);
 			prev = current;
 			current = current->next;
 		}
