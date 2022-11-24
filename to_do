@@ -16,3 +16,6 @@ assign fd for cmd list items,
 
 Error codes
 Return errors on bad called functions
+
+maybe convert env vars to double char array or create char double array that updates on envar changes
+use envar double char array to feed into execve to properly use envp input
