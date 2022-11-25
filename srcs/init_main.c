@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:10:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/10/19 14:15:19 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/25 13:01:20 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_super(void)
 {
 	g_super.envar = (t_envar *)malloc(sizeof(t_envar));
 	g_super.envar = NULL;
+	g_super.envar_arr = NULL;
 	g_super.builtins = malloc(sizeof(char **) * 8);
 	g_super.builtins = set_builtin(g_super.builtins);
 }

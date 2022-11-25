@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:58:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/14 14:35:42 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:57:03 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,47 @@ void	print_env(void)
 		printf("%s = %s\n", temp->name, (char *)temp->data);
 		temp = temp->next;
 	}
+}
+
+static int	count_envars(t_envar *envars)
+{
+	t_envar		*temp;
+	int			i;
+
+	temp = envars;
+	i = 0;
+	while (temp)
+	{
+		i++;
+		temp = temp->next;
+	}
+	return (i);
+}
+
+void	rebuild_envar_arr(void)
+{
+	char		**new_arr;
+	t_envar		*temp;
+	int			num;
+	int			j;
+
+	if (g_super.envar_arr != NULL)
+		free(g_super.envar_arr);
+	temp = g_super.envar;
+	num = count_envars(temp);
+	j = 0;
+	new_arr = malloc(sizeof(char *) * num + 1);
+	if (!new_arr)
+		return ;
+	while (j < num)
+	{
+		new_arr[j] = ft_strdup(temp->name);
+		new_arr[j] = ft_strjoin(new_arr[j], "=");
+		new_arr[j] = ft_strjoin(new_arr[j], temp->data);
+		j++;
+		temp = temp->next;
+	}
+	new_arr[j] = NULL;
+	g_super.envar_arr = new_arr;
+	return ;
 }

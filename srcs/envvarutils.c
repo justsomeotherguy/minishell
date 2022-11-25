@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 16:31:15 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/15 23:54:13 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:56:10 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	add_env(t_envar **envars, t_envar *new)
 		add = to_last(*envars);
 		add->next = new;
 	}
+	rebuild_envar_arr();
 }
 
 /*
@@ -111,4 +112,5 @@ void	find_and_remove(t_envar *envars, char *var_name)
 		prev = temp;
 		temp = temp->next;
 	}
+	rebuild_envar_arr();
 }

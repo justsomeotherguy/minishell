@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 13:35:21 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:34:24 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 typedef struct s_super
 {
 	struct s_envar		*envar;
+	char				**envar_arr;
 	char				**builtins;
 	char				**full_tokens;
 	struct s_cmdset		*cmds;
@@ -84,6 +85,7 @@ void		builtin_cd(char **tokens);
 /* envvars.c */
 void		set_env(char **envp);
 void		print_env(void);
+void		rebuild_envar_arr(void);
 
 /* envvarutils.c */
 t_envar		*new_env(char *name, void *data);

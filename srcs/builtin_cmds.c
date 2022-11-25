@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 14:53:51 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/25 12:49:51 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ void	builtin_cd(char **tokens)
 		}
 	}
 	else
-	{
 		printf("chdir error\n");
-	}
 	return ;
 }

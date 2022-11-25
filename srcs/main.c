@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/22 16:18:07 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:55:41 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_super		g_super;
 
-char *ft_strjoin_safe_free(char *s1, char *s2, bool f1, bool f2)
+char	*ft_strjoin_safe_free(char *s1, char *s2, bool f1, bool f2)
 {
 	char	*str;
 
@@ -49,7 +49,8 @@ static char	*get_prompt(void)
 	if (temp)
 		prompt = ft_strjoin_safe_free(prompt, (char *)temp->data, true, false);
 	else
-		prompt = ft_strjoin_safe_free(prompt, "Unable to find $PWD", true, false);
+		prompt = ft_strjoin_safe_free(prompt, "Unable to find $PWD", true,
+				false);
 	prompt = ft_strjoin_safe_free(prompt, T_DEFAULT, true, false);
 	prompt = ft_strjoin_safe_free(prompt, " $> ", true, false);
 	return (prompt);
@@ -62,6 +63,7 @@ int	main(int argc, char **argv, char **envp)
 
 	init_super();
 	set_env(envp);
+	rebuild_envar_arr();
 	signal(SIGINT, sig_handler_int);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
