@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/25 15:34:24 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/27 23:21:26 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_cmdset
 	int					pipefd[2];
 	int					fd_in;
 	int					fd_out;
+	int					cmd_no;
 	struct s_cmdset		*next;
 }	t_cmdset;
 
@@ -103,6 +104,10 @@ int			set_fileout(t_cmdset *current, char *fileout, int set);
 int			set_fd_in(t_cmdset *current);
 int			set_fd_out(t_cmdset *current);
 
+/* execute_utils.c */
+int			ft_dup2(int old, int new);
+void		set_fds(void);
+
 /* free.c */
 void		free_cmds(t_cmdset **cmdsets);
 void		free_2d_array(char **array);
@@ -121,7 +126,7 @@ t_cmdset	*to_last_cmdset(t_cmdset *cmdset);
 
 /* sig.c */
 void		sig_handler_int(int sig_num);
-void		sig_handler_quit(int sig_num);
+void		make_signal(void);
 
 /* utils.c */
 int			ft_strcmp(char *s1, char *s2);

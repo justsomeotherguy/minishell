@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:55:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/14 15:43:56 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/27 23:26:08 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,21 @@ static void	do_parsing(t_cmdset *temp)
 	return ;
 }
 
+static void	set_cmd_nums(void)
+{
+	int			i;
+	t_cmdset	*current;
+
+	i = 0;
+	current = g_super.cmds;
+	while (current)
+	{
+		current->cmd_no = i;
+		i++;
+		current = current->next;
+	}
+}
+
 void	parse_token(void)
 {
 	t_cmdset	*temp;
@@ -68,5 +83,6 @@ void	parse_token(void)
 	temp = new_cmdset();
 	temp->tokens = malloc(sizeof(char *) * (count_tokens(tk) + 1));
 	do_parsing(temp);
+	set_cmd_nums();
 	return ;
 }

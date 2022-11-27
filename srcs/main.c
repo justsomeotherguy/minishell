@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/25 15:55:41 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/27 19:29:50 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #include <stdbool.h>
 
 t_super		g_super;
+
+static void	free_main_items(char *line, char *prompt)
+{
+	free_cmds(&g_super.cmds);
+	free_2d_array(g_super.full_tokens);
+	free(prompt);
+	free(line);
+}
 
 char	*ft_strjoin_safe_free(char *s1, char *s2, bool f1, bool f2)
 {
@@ -64,15 +72,13 @@ int	main(int argc, char **argv, char **envp)
 	init_super();
 	set_env(envp);
 	rebuild_envar_arr();
-	signal(SIGINT, sig_handler_int);
-	signal(SIGQUIT, SIG_IGN);
+	make_signal();
 	while (1)
 	{
 		prompt = get_prompt();
 		if (prompt == NULL)
 			return (1); // TODO: FREE.
 		line = readline(prompt);
-		free(prompt);
 		if (!line)
 			write(1, "\n", 1);
 		else
@@ -82,10 +88,7 @@ int	main(int argc, char **argv, char **envp)
 			parse_token();
 			executor();
 		}
-		free_cmds(&g_super.cmds);
-		free_2d_array(g_super.full_tokens);
-		free(line);
+		free_main_items(line, prompt);
 	}
-	rl_clear_history();
 	return (0);
 }

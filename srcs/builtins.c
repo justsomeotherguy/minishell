@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:39:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/14 14:35:18 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/27 19:01:31 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ int	is_builtin(char **tokens)
 
 	i = 0;
 	j = 0;
-	while (tokens[i])
+	while (tokens[i] && i == 0)
 	{
 		while (g_super.builtins[j])
 		{
+			dprintf(2, "check token in builtin - '%s'\n", tokens[i]);
+			dprintf(2, "check builtin - '%s'\n", g_super.builtins[j]);
 			if (ft_strcmp(tokens[i], g_super.builtins[j]) == 0)
 				return (j);
 			j++;
@@ -54,6 +56,7 @@ Builtin IDs
 */
 void	do_builtin(int builtin_id, char **tokens)
 {
+	dprintf(2, "builtin id - %i\n", builtin_id);
 	if (builtin_id == 0)
 		builtin_echo(tokens);
 	if (builtin_id == 1)
