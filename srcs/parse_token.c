@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:55:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/27 23:26:08 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:18:23 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void	set_cmd_nums(void)
 	while (current)
 	{
 		current->cmd_no = i;
+		dprintf(2, "current cmd set num - %i\n", current->cmd_no);
 		i++;
 		current = current->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:15:49 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/27 18:28:49 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:33:47 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	set_filein(t_cmdset *current, char *filein, int set)
 	int		f_in;
 	char	**trim;
 
+	f_in = 0;
 	if (set == 0)
 	{
 		f_in = open(filein, O_RDONLY);
@@ -72,6 +73,7 @@ int	set_fileout(t_cmdset *current, char *fileout, int set)
 	int		f_out;
 	char	**trim;
 
+	f_out = 0;
 	if (set == 0)
 	{
 		f_out = open(fileout, O_CREAT | O_WRONLY | O_TRUNC, 0777);
@@ -88,8 +90,7 @@ int	set_fileout(t_cmdset *current, char *fileout, int set)
 		current->tokens = trim;
 		return (f_out);
 	}
-	else
-		return (1);
+	return (1);
 }
 
 int	set_fd_in(t_cmdset *current)
@@ -113,6 +114,7 @@ int	set_fd_in(t_cmdset *current)
 		}
 		j++;
 	}
+	temp->fd_in = STDIN_FILENO;
 	return (0);
 }
 
@@ -142,5 +144,6 @@ int	set_fd_out(t_cmdset *current)
 			}
 		}
 	}
+	temp->fd_out = STDOUT_FILENO;
 	return (0);
 }

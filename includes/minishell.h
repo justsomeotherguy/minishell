@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/27 23:21:26 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/28 15:17:40 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_super
 	char				**full_tokens;
 	struct s_cmdset		*cmds;
 	int					status;
-	char				*heredoc;
+	pid_t				pid;
 }	t_super;
 
 typedef struct s_envar
@@ -55,7 +55,6 @@ typedef struct s_envar
 typedef struct s_cmdset
 {
 	char				**tokens;
-	int					pid;
 	int					pipefd[2];
 	int					fd_in;
 	int					fd_out;

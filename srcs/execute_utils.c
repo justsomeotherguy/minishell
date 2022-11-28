@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 16:48:45 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/27 17:39:52 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:07:52 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	set_fds(void)
 
 	to_set = g_super.cmds;
 	i = 0;
-	while (to_set)
+	while (to_set != NULL)
 	{
 		set_fd_in(to_set);
 		dprintf(2, "cmd set %i - fd in %i\n", i, to_set->fd_in);
