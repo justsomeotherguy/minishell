@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/27 19:09:45 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:46:08 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ void	builtin_echo(char **tokens)
 
 	i = 1;
 	option = 0;
-	if (ft_strcmp(tokens[1], "-n") == 0)
+	if (!tokens[1])
+		return ;
+	if (tokens[1] && ft_strcmp(tokens[1], "-n") == 0)
 	{
 		i++;
 		option++;
@@ -63,11 +65,12 @@ void	builtin_echo(char **tokens)
 		ft_putstr_fd(tokens[i], 1);
 		i++;
 		if (tokens[i] != 0)
-			write(1, " ", 1);
+			ft_putchar_fd(' ', 1);
 	}
 	if (option != 1)
-		write(1, "\n", 1);
+		ft_putchar_fd('\n', 1);
 	g_super.status = 0;
+	dprintf(2, "done echo\n");
 	return ;
 }
 
