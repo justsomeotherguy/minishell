@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/29 16:53:37 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:15:56 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,116 +33,129 @@ void	exec_cmd(char **cmds)
 	exit(0);
 }
 
-void	open_close(t_cmdset *current, int *curr_p, int *next_p)
+void	open_close(t_cmdset *current, int *old_p, int *new_p)
 {
+	dprintf(2, "check to open and close\n");
 	if (current->cmd_no != 0)
 	{
-		dprintf(2, "close read end\n");
-		close(curr_p[1]);
-		ft_dup2(curr_p[0], STDIN_FILENO);
+		dprintf(2, "child - close inbetween pipes\n");
+		close(old_p[1]);
+		dprintf(2, "child - close curr_p[1]\n");
+		if (dup2(old_p[0], STDIN_FILENO) < 0)
+			return ; // to do error
+		close(old_p[0]);
+//		ft_dup2(old_p[0], STDIN_FILENO);
+		dprintf(2, "child - dup and close curr_p[0] to stdin\n");
 	}
 	if (current->next != NULL)
 	{
-		dprintf(2, "close write end\n");
-		close(next_p[0]);
-		ft_dup2(next_p[1], STDOUT_FILENO);
+		dprintf(2, "child - close last pipe\n");
+		close(new_p[0]);
+		dprintf(2, "child - close next_p[0]\n");
+//		ft_dup2(new_p[1], STDOUT_FILENO);
+		if (dup2(new_p[1], STDOUT_FILENO) < 0)
+			return ; // to do error
+		close(new_p[1]);
+		dprintf(2, "child - dup and close next_p[1] to stdout\n");
 	}
 }
 
-int	set_redir(t_cmdset *current, int *curr_p)
+int	set_redir(t_cmdset *current)
 {
+	dprintf(2, "set redirect\n");
+	set_fd_in(current);
 	if (current->fd_in != 0)
 	{
-		if (ft_dup2(current->fd_in, STDIN_FILENO < 0))
+		if (dup2(current->fd_out, STDOUT_FILENO) < 0)
 			return (-1); // to do error
+		close(current->fd_out);
+//		if (ft_dup2(current->fd_in, STDIN_FILENO < 0))
+//			return (-1); // to do error
+		dprintf(2, "child - close file in\n");
 	}
+	set_fd_out(current);
 	if (current->fd_out != 1)
 	{
-		if (ft_dup2(current->fd_out, STDOUT_FILENO < 0))
+		if (dup2(current->fd_out, STDOUT_FILENO) < 0)
 			return (-1); // to do error
+		close(current->fd_out);
+//		if (ft_dup2(current->fd_out, STDOUT_FILENO < 0))
+//			return (-1); // to do error
+		dprintf(2, "child - close file out\n");
 	}
-	else if (current->next && dup2(curr_p[1], STDOUT_FILENO) < 0)
-		return (-1); // to do error
-	close(curr_p[1]);
+//	else if (current->next && dup2(curr_p[1], STDOUT_FILENO) < 0)
+//		return (-1); // to do error
+//	close(curr_p[1]);
 	return (0);
 }
 
-int	pipe_exec(t_cmdset *current, int *curr_p, int *next_p)
+int	pipe_exec(t_cmdset *current, int *curr_p, int *new_p)
 {
-	set_redir(current, curr_p);
-	close(curr_p[0]);
+	dprintf(2, "child process\n");
+	open_close(current, curr_p, new_p);
+	set_redir(current);
 	if (is_builtin(current->tokens) >= 0)
-	{
-		dprintf(2, "do builtin\n");
 		do_builtin(is_builtin(current->tokens), current->tokens);
-	}
 	else
-	{
-		dprintf(2, "fork process\n");
-		g_super.pid = fork();
-		dprintf(2, "created fork - %i\n", g_super.pid);
-		if (g_super.pid < 0)
-			return (-1); // to do error
-		if (g_super.pid == 0)
-		{
-			dprintf(2, "child process\n");
-			open_close(current, curr_p, next_p);
-			exec_cmd(current->tokens);
-		}
-	}
-	dprintf(2, "end pipe exec\n");
+		exec_cmd(current->tokens);
 	return (0);
 }
 
 
-void	pipe_exec_fin(t_cmdset *current, int *curr_p, int *next_p)
+void	pipe_exec_fin(t_cmdset *current, int *old_p, int *new_p)
 {
-	if (g_super.pid > 0)
+	dprintf(2, "parent process\n");
+	if (current->cmd_no != 0)
 	{
-		dprintf(2, "parent process\n");
-		if (current->cmd_no != 0)
-		{
-			dprintf(2, "close old pipes\n");
-			close(curr_p[0]);
-			close(curr_p[1]);
-		}
-		if (current->next != NULL)
-		{
-			dprintf(2, "set to new pipes\n");
-			curr_p[0] = next_p[0];
-			curr_p[1] = next_p[1];
-		}
+		close(old_p[0]);
+		dprintf(2, "parent - old_p[0] pipe closed\n");
+		close(old_p[1]);
+		dprintf(2, "parent - old_p[1] pipe closed\n");
+	}
+	if (current->next != NULL)
+	{
+		old_p[0] = new_p[0];
+		dprintf(2, "parent - old_p[0] to new_p[0]\n");
+		old_p[1] = new_p[1];
+		dprintf(2, "parent - old_p[1] to new_p[1]\n");
 	}
 	waitpid(g_super.pid, &g_super.status, 0);
 }
 
-int	set_pipe(t_cmdset *current, int *next_p)
+int	set_pipe(t_cmdset *current, int *new_p)
 {
 	if (current->next != NULL)
 	{
 		dprintf(2, "cmd set %i - create pipe\n", current->cmd_no);
-		if (pipe(next_p) < 0)
+		if (pipe(new_p) < 0)
 			return (-1); // to do error
 	}
+	g_super.pid = fork();
+	if (g_super.pid < 0)
+		return (-1); // to do error
 	return (0);
 }
 
 void	executor(void)
 {
 	t_cmdset	*current;
-	int			curr_p[2];
-	int			next_p[2];
+	int			old_p[2];
+	int			new_p[2];
 
 	current = g_super.cmds;
-	set_fds();
+//	set_fds();
 	while (current != NULL)
 	{
 //		dprintf(2, "cmd no - %i\n", current->cmd_no);
-		if (set_pipe(current, next_p) != 0)
+		if (set_pipe(current, new_p) != 0)
 			return ; // to do error
 //		dprintf(2, "pid - %i\n", g_super.pid);
-		pipe_exec(current, curr_p, next_p);
-		pipe_exec_fin(current, curr_p, next_p);
+		if (g_super.pid == 0)
+			pipe_exec(current, old_p, new_p);
+		else if (g_super.pid > 0)
+			pipe_exec_fin(current, old_p, new_p);
+		else
+			return ; // to do error
 //		dprintf(2, "after child pid - %i\n", g_super.pid);
 		current = current->next;
 	}

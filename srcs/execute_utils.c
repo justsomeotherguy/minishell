@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 16:48:45 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 16:07:52 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:30:10 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	ft_dup2(int old, int new)
 {
 	if (dup2(old, new) < 0)
 		return (-1);
-	else
-		close(old);
+	close(old);
 	return (0);
 }
 

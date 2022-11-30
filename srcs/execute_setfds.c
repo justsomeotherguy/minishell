@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:15:49 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 16:33:47 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:46:02 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	set_filein(t_cmdset *current, char *filein, int set)
 		trim = trim_tokens(current, "<");
 		free_2d_array(current->tokens);
 		current->tokens = trim;
+		dprintf(2, "file in set - %i\n", f_in);
 		return (f_in);
 	}
 	else if (set == 1)
@@ -63,6 +64,7 @@ int	set_filein(t_cmdset *current, char *filein, int set)
 		trim = trim_tokens(current, "<<");
 		free_2d_array(current->tokens);
 		current->tokens = trim;
+		dprintf(2, "file in set - %i\n", f_in);
 		return (f_in);
 	}
 	return (0);
@@ -80,6 +82,7 @@ int	set_fileout(t_cmdset *current, char *fileout, int set)
 		trim = trim_tokens(current, ">");
 		free_2d_array(current->tokens);
 		current->tokens = trim;
+		dprintf(2, "file out set - %i\n", f_out);
 		return (f_out);
 	}
 	else if (set == 1)
@@ -88,6 +91,7 @@ int	set_fileout(t_cmdset *current, char *fileout, int set)
 		trim = trim_tokens(current, ">>");
 		free_2d_array(current->tokens);
 		current->tokens = trim;
+		dprintf(2, "file out set - %i\n", f_out);
 		return (f_out);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:58:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/27 00:29:03 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:19:46 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	print_env(void)
 	temp = g_super.envar;
 	while (temp)
 	{
-		ft_putstr_fd(temp->name, 1);
-		write(1, "=", 1);
-		ft_putendl_fd(temp->data, 1);
-//		printf("%s = %s\n", temp->name, (char *)temp->data);
+//		ft_putstr_fd(temp->name, 1);
+//		write(1, "=", 1);
+//		ft_putendl_fd(temp->data, 1);
+		printf("%s = %s\n", temp->name, (char *)temp->data);
 		temp = temp->next;
 	}
 	g_super.status = 0;
