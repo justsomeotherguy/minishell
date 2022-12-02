@@ -1,21 +1,27 @@
 to_do
 
-create int_arrays for pipes in cmd list
-change execution function to check if first/last in cmd list
-assign fd for cmd list items, 
+done?
+          create int_arrays for pipes in cmd list
+          change execution function to check if first/last in cmd list
+          assign fd for cmd list items, 
 
-  cmd 1:
-  stdin
-  dup2(fd[1], stdout)
-  close(fd[1])
-  
-  cmd 2:
-  dup2(fd[0], stdin)
-  close(fd[0])
-  close(cmd1->fd[0])
+            cmd 1:
+            stdin
+            dup2(fd[1], stdout)
+            close(fd[1])
 
-Error codes
-Return errors on bad called functions
+            cmd 2:
+            dup2(fd[0], stdin)
+            close(fd[0])
+            close(cmd1->fd[0])
 
-maybe convert env vars to double char array or create char double array that updates on envar changes
-use envar double char array to feed into execve to properly use envp input
+
+todo
+    Error codes
+    Return errors on bad called functions
+
+    handle absolute paths in execve
+
+    correct env link list deleting itself if first node is unset
+
+    signals for heredoc and exec
