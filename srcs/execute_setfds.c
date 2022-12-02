@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:15:49 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/30 14:46:02 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:08:35 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,15 @@ int	set_fd_in(t_cmdset *current)
 	while (temp->tokens[j])
 	{
 		if (ft_strncmp(temp->tokens[j], "<<", 2) == 0 && temp->tokens[j + 1])
-			{
-				temp->fd_in = set_filein(temp, temp->tokens[j + 1], 1);
-				return (1);
-			}
-		else if (ft_strncmp(temp->tokens[j], "<", 1) == 0 && temp->tokens[j + 1])
 		{
-				temp->fd_in = set_filein(temp, temp->tokens[j + 1], 0);
-				return (1);
+			temp->fd_in = set_filein(temp, temp->tokens[j + 1], 1);
+			return (1);
+		}
+		else if (ft_strncmp(temp->tokens[j], "<", 1) == 0
+			&& temp->tokens[j + 1])
+		{
+			temp->fd_in = set_filein(temp, temp->tokens[j + 1], 0);
+			return (1);
 		}
 		j++;
 	}
@@ -131,21 +132,16 @@ int	set_fd_out(t_cmdset *current)
 	j = -1;
 	while (temp->tokens[++j])
 	{	
-		if (ft_strncmp(temp->tokens[j], ">>", 2) == 0)
+		if (ft_strncmp(temp->tokens[j], ">>", 2) == 0 && temp->tokens[j + 1])
 		{
-			if (temp->tokens[j + 1])
-			{	
-				temp->fd_out = set_fileout(temp, temp->tokens[j + 1], 1);
-				return (1);
-			}
+			temp->fd_out = set_fileout(temp, temp->tokens[j + 1], 1);
+			return (1);
 		}
-		else if (ft_strncmp(temp->tokens[j], ">", 1) == 0)
-		{
-			if (temp->tokens[j + 1])
-			{	
-				temp->fd_out = set_fileout(temp, temp->tokens[j + 1], 0);
-				return (1);
-			}
+		else if (ft_strncmp(temp->tokens[j], ">", 1) == 0
+			&& temp->tokens[j + 1])
+		{	
+			temp->fd_out = set_fileout(temp, temp->tokens[j + 1], 0);
+			return (1);
 		}
 	}
 	temp->fd_out = STDOUT_FILENO;

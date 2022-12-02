@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:39:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 13:48:42 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:08:55 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ extern t_super	g_super;
 Check input tokens to verify if they match any of the builtin commands,
 if one is found, set builtin id int and pass to switcher function.
 */
-int	is_builtin(char **tokens)
+int	is_builtin_child(char **tokens)
 {
 	int		i;
 	int		j;
@@ -29,8 +29,39 @@ int	is_builtin(char **tokens)
 	{
 		while (g_super.builtins[j])
 		{
-			if (ft_strcmp(tokens[i], g_super.builtins[j]) == 0)
-				return (j);
+			if (j == 0 || j == 2 || j == 5)
+			{
+				if (ft_strcmp(tokens[i], g_super.builtins[j]) == 0)
+					return (j);
+			}
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	return (-1);
+}
+
+/*
+Check input tokens to verify if they match any of the builtin commands,
+if one is found, set builtin id int and pass to switcher function.
+*/
+int	is_builtin_parent(char **tokens)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (tokens[i] && i == 0)
+	{
+		while (g_super.builtins[j])
+		{
+			if (j == 1 || j == 3 || j == 4 || j == 6)
+			{
+				if (ft_strcmp(tokens[i], g_super.builtins[j]) == 0)
+					return (j);
+			}
 			j++;
 		}
 		i++;

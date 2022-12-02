@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/30 16:46:42 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:38:22 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,15 @@ void		expand_tokens(char **tokens);
 int			is_between_quote(char *token, int pos);
 
 /* builtins.c */
-int			is_builtin(char **tokens);
+int			is_builtin_child(char **tokens);
+int			is_builtin_parent(char **tokens);
 void		do_builtin(int builtin_id, char **tokens);
 
 /* builtin_cmds.c */
-void		builtin_pwd(void);
+int			builtin_pwd(void);
 void		builtin_export(char **tokens);
 void		builtin_echo(char **tokens);
-void		builtin_cd(char **tokens);
+int			builtin_cd(char **tokens);
 
 /* envvars.c */
 void		set_env(char **envp);

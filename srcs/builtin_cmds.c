@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/30 16:47:26 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:08:28 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void	builtin_export(char **tokens)
 	return ;
 }
 
-void	builtin_pwd(void)
+int	builtin_pwd(void)
 {
 	printf("%s\n", (char *)find_env(g_super.envar, "PWD")->data);
 	g_super.status = 0;
-	return ;
+	return (0);
 }
 
 /*
@@ -74,7 +74,7 @@ void	builtin_echo(char **tokens)
 //		ft_putchar_fd('\n', 1);
 	g_super.status = 0;
 	dprintf(2, "done echo\n");
-	exit (0);
+	return ;
 }
 
 /*
@@ -83,7 +83,7 @@ if it is a valid directory, it should be able to check if absolute or relative.
 If valid, change the environment variable of pwd to reflect that the
 working directory is changed.
 */
-void	builtin_cd(char **tokens)
+int	builtin_cd(char **tokens)
 {
 	char		cwd[256];
 	t_envar		*pwd;
@@ -104,6 +104,9 @@ void	builtin_cd(char **tokens)
 		}
 	}
 	else
+	{
 		printf("chdir error\n");
-	return ;
+		return (-1);
+	}
+	return (0);
 }
