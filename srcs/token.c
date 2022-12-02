@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/27 18:31:12 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:32:24 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,116 +117,4 @@ char	**make_tokens(char *line)
 	tokens[tk] = 0;
 	expand_tokens(tokens);
 	return (tokens);
-}
-
-static char	*get_envar(char *getname)
-{
-	t_envar	*temp;
-
-	temp = find_env(g_super.envar, getname);
-	if (temp)
-		return ((char *)ft_strdup(temp->data));
-	else
-		return (ft_strdup(""));
-}
-
-static int	get_envarname_length(char *token)
-{
-	int		i;
-
-	i = 0;
-	while (token[i] != '\0' && token[i] != ' ')
-		i++;
-	return (i);
-}
-
-static char	*expand_str(char *token, int pos)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	*str;
-	char	*new;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	str = get_envar((ft_strchr(token, '$') + 1));
-	if (str)
-		printf("str - %s\n", str);
-	else
-		printf("nothing here\n");
-	new = malloc(sizeof(char) * (ft_strlen(token)
-				- get_envarname_length(ft_strchr(token, '$') + 1))
-			+ ft_strlen(str));
-	while (token[i])
-	{
-		if (token[i] == '$')
-		{
-			if (ft_strlen(str) > 0)
-			{
-				while (str[j] != '\0')
-				{
-					new[k] = str[j];
-					k++;
-					j++;
-				}
-				i += get_envarname_length(token + i);
-			}
-			else
-			{
-				new[k] = ' ';
-				k++;
-				i += get_envarname_length(token + i);
-			}
-		}
-		new[k] = token[i];
-		i++;
-		k++;
-	}
-	new[k] = '\0';
-	free(token);
-	if (str)
-		free(str);
-	return (new);
-}
-
-static int	trimquotes(char **tokens, int i) {
-	if (tokens[i][0] == '\'')
-	{
-		tokens[i] = ft_strtrim(tokens[i], "\'");
-		i++;
-	}
-	if (tokens[i][0] == '\"')
-		tokens[i] = ft_strtrim(tokens[i], "\"");
-	return (i);
-}
-
-/*
-Checks tokens if $ character is within it.
-Checks name after $ against environment variables and replaces token with
-the content of the variable.
-*/
-void	expand_tokens(char **tokens)
-{
-	int		i;
-	int		j;
-	//t_envar	*test;
-
-	i = -1;
-	while (tokens[++i])
-	{
-		j = 0;
-		i = trimquotes(tokens, i);
-		while (tokens[i] && tokens[i][j] != '\0')
-		{
-			if (tokens[i][j] == '$')
-			{
-				tokens[i] = expand_str(tokens[i], j);
-				printf("%s\n", tokens[i]);
-				j = -1;
-			}
-			j++;
-		}
-	}
 }

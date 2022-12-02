@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/02 14:38:22 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:29:40 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ void		expand_tokens(char **tokens);
 
 /* token_utils.c */
 int			is_between_quote(char *token, int pos);
+char		*get_envar(char *getname);
+int			get_envarname_length(char *token);
+int			trimquotes(char **tokens, int i);
+
+/* token_expand.c */
+char		*expand_str(char *token, int pos);
+void		expand_tokens(char **tokens);
 
 /* builtins.c */
 int			is_builtin_child(char **tokens);
@@ -96,6 +103,10 @@ void		find_and_remove(t_envar *envars, char *var_name);
 t_envar		*find_env(t_envar *envars, char *name);
 
 /* execute.c */
+void		exec_cmd(char **cmds);
+int			pipe_exec(t_cmdset *current, int *curr_p, int *new_p);
+void		pipe_exec_fin(t_cmdset *current, int *old_p, int *new_p);
+int			set_pipe(t_cmdset *current, int *new_p);
 void		executor(void);
 
 /* execute_setfds.c */
@@ -105,8 +116,10 @@ int			set_fd_in(t_cmdset *current);
 int			set_fd_out(t_cmdset *current);
 
 /* execute_utils.c */
-int			ft_dup2(int old, int new);
+//int			ft_dup2(int old, int new);
 void		set_fds(void);
+int			set_redir(t_cmdset *current);
+void		open_close(t_cmdset *current, int *old_p, int *new_p);
 
 /* free.c */
 void		free_cmds(t_cmdset **cmdsets);
