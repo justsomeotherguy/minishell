@@ -25,3 +25,5 @@ todo
     correct env link list deleting itself if first node is unset
 
     signals for heredoc and exec
+
+    look into quotes trimming
