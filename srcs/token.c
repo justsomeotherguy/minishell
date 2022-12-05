@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/02 16:32:24 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:59:34 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,112 @@
 
 extern t_super	g_super;
 
+int	token_length(char const *line)
+{
+	int		len;
+
+	dprintf(2, "token length received string %s\n", line);
+	len = 0;
+	if (line[len] == 34)
+	{
+		len++;
+		while (line[len] != 34 && line[len + 1] != '\0')
+			len++;
+		return (len + 1);
+	}
+	else if (line[len] == 39)
+	{
+		len++;
+		while (line[len] != 39 && line[len + 1] != '\0')
+			len++;
+		return (len + 1);
+	}
+	else
+	{
+		while (line[len + 1] != ' ' && line[len] != '\0')
+			len++;
+	}
+	return (len);
+}
+
+char	*make_token(char *line)
+{
+	char	*tk;
+	int		i;
+	int		length;
+
+	i = 0;
+	length = token_length(line);
+	tk = malloc(sizeof(char) * (length + 1));
+	while (i <= length)
+	{
+		tk[i] = line[i];
+		i++;
+	}
+	tk[i] = '\0';
+	return (tk);
+}
+
+int	count_tokens(char const *line, int count)
+{
+	int		i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (i == 0 && (line[i] >= 33 && line[i] <= 127))
+			count++;
+		if (line[i] == 34)
+		{
+			i++;
+			while (line[i] != 34 && line[i + 1] != '\0')
+				i++;
+		}
+		else if (line[i] == 39)
+		{
+			i++;
+			while (line[i] != 39 && line[i + 1] != '\0')
+				i++;
+		}
+		else if ((line[i] == ' ' || line[i] == '\t')
+			&& (line[i + 1] >= 33 && line[i + 1] <= 127))
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+char	**make_tokens(char *line)
+{
+	char	**tokens;
+	int		tkcount;
+	int		i;
+	int		j;
+
+	tkcount = 0;
+	i = 0;
+	j = 0;
+	tokens = malloc(sizeof(char *) * (count_tokens(line, tkcount) + 1));
+	if (!tokens)
+		return (NULL);
+	while (line[i] != '\0')
+	{
+		if (line[i] >= 33 && line[i] <= 126)
+		{
+			tokens[j] = make_token(&line[i]);
+			i += (ft_strlen(tokens[j]) - 1);
+			j++;
+		}
+		i++;
+	}
+	tokens[j] = 0;
+	for (int l = 0; tokens[l]; l++)
+		dprintf(2, "tokens before expanding - '%s'\n", tokens[l]);
+	expand_tokens(tokens);
+	return (tokens);
+}
+
+/*
 int	get_line_length(char *line)
 {
 	int		len;
@@ -40,7 +146,9 @@ int	get_line_length(char *line)
 	}
 	return (len);
 }
+*/
 
+/*
 int	token_length(char const *line)
 {
 	int		len;
@@ -69,25 +177,9 @@ int	token_length(char const *line)
 	}
 	return (len);
 }
+*/
 
-char	*make_token(char *line)
-{
-	char	*tk;
-	int		i;
-	int		length;
-
-	i = 0;
-	length = token_length(line);
-	tk = malloc(sizeof(char) * (length + 1));
-	while (i < length)
-	{
-		tk[i] = line[i];
-		i++;
-	}
-	tk[i] = '\0';
-	return (tk);
-}
-
+/*
 char	**make_tokens(char *line)
 {
 	char	**tokens;
@@ -115,6 +207,9 @@ char	**make_tokens(char *line)
 		i++;
 	}
 	tokens[tk] = 0;
+	for (int l = 0; tokens[l] != 0; l++)
+		dprintf(2, "token[%i] - %s\n", l, tokens[l]);
 	expand_tokens(tokens);
 	return (tokens);
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/27 19:29:50 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:55:05 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			g_super.full_tokens = make_tokens(line);
+			for (int i = 0; g_super.full_tokens[i]; i++)
+				dprintf(2, "full tokens - '%s'\n", g_super.full_tokens[i]);
 			parse_token();
 			executor();
 		}

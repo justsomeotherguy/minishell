@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/02 16:29:40 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:32:40 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,10 @@ typedef struct s_cmdset
 }	t_cmdset;
 
 /* token.c */
-int			get_line_length(char *line);
 int			token_length(char const *line);
 char		*make_token(char *line);
 char		**make_tokens(char *line);
-void		expand_tokens(char **tokens);
+int			count_tokens(char const *line, int count);
 
 /* token_utils.c */
 int			is_between_quote(char *token, int pos);

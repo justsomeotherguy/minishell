@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/02 16:22:55 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:45:13 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ void	exec_cmd(char **cmds)
 	char	**paths;
 	char	*exec_path;
 
+	if (cmds[0][0] == '/')
+	{
+		if (execve(cmds[0], cmds, g_super.envar_arr) == -1)
+		{
+			ft_putstr_fd("Unable to execute command\n", 2);
+			exit(1); // to_do error
+		}
+	}
 	paths = init_pathlist();
 	if (!paths)
 		exit(1); // to_do error
@@ -35,6 +43,7 @@ void	exec_cmd(char **cmds)
 
 int	pipe_exec(t_cmdset *current, int *curr_p, int *new_p)
 {
+	make_signal();
 	dprintf(2, "child process\n");
 	open_close(current, curr_p, new_p);
 	set_redir(current);

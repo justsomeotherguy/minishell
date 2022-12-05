@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:28:54 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/02 15:07:39 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:59:30 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	get_heredoc(char *end)
 	char	*line;
 	int		fd[2];
 
+//	make_signal();
 	if (pipe(fd) < 0)
 		return (-1); // to do error
 	while (1)
