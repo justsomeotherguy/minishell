@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:55:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 14:18:23 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:36:19 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_super	g_super;
 
-static int	count_tokens(int pos)
+static int	count_pipes(int pos)
 {
 	int		i;
 
@@ -43,7 +43,7 @@ static void	do_parsing(t_cmdset *temp)
 			temp->tokens[i] = 0;
 			add_cmdset(&g_super.cmds, temp);
 			temp = new_cmdset();
-			temp->tokens = malloc(sizeof(char *) * (count_tokens(tk + 1) + 1));
+			temp->tokens = malloc(sizeof(char *) * (count_pipes(tk + 1) + 1));
 			i = 0;
 		}
 		else
@@ -82,7 +82,7 @@ void	parse_token(void)
 
 	tk = 0;
 	temp = new_cmdset();
-	temp->tokens = malloc(sizeof(char *) * (count_tokens(tk) + 1));
+	temp->tokens = malloc(sizeof(char *) * (count_pipes(tk) + 1));
 	do_parsing(temp);
 	set_cmd_nums();
 	return ;

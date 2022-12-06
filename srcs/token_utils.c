@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:56:38 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/02 16:31:03 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:55:35 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ char	*get_envar(char *getname)
 {
 	t_envar	*temp;
 
+	if (getname[0] == '$')
+		getname++;
 	temp = find_env(g_super.envar, getname);
 	if (temp)
 		return ((char *)ft_strdup(temp->data));
 	else
-		return (ft_strdup(""));
+		return (NULL);
 }
 
 int	get_envarname_length(char *token)
@@ -59,6 +61,28 @@ int	get_envarname_length(char *token)
 	while (token[i] != '\0' && token[i] != ' ')
 		i++;
 	return (i);
+}
+
+char	*trim_quotes(char *str, char c)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	i = 0;
+	j = 0;
+	dprintf(2, "start trimming for %c\n", c);
+	new = malloc(sizeof(char) * ft_strlen(str));
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			i++;
+		new[j] = str[i];
+		i++;
+		j++;
+	}
+	new[j] = '\0';
+	return (new);
 }
 
 int	trimquotes(char **tokens, int i)

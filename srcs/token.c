@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/05 19:59:34 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:28:23 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	token_length(char const *line)
 	if (line[len] == 34)
 	{
 		len++;
-		while (line[len] != 34 && line[len + 1] != '\0')
+		while (line[len] != 34 && line[len] != '\0')
 			len++;
-		return (len + 1);
+		return (len);
 	}
 	else if (line[len] == 39)
 	{
-		len++;
-		while (line[len] != 39 && line[len + 1] != '\0')
+		len ++;
+		while (line[len] != 39 && line[len] != '\0')
 			len++;
-		return (len + 1);
+		return (len);
 	}
 	else
 	{

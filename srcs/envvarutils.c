@@ -6,11 +6,13 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 16:31:15 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/25 15:56:10 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:50:11 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_super	g_super;
 
 /*
 Initialize new t_envar list entry with input name and data to fill list
@@ -92,21 +94,16 @@ void	find_and_remove(t_envar *envars, char *var_name)
 {
 	t_envar		*temp;
 	t_envar		*prev;
-	t_envar		*store;
 
 	temp = envars;
-	prev = temp;
+	prev = NULL;
 	if (!envars)
 		return ;
 	while (temp)
 	{
 		if (ft_strcmp(temp->name, var_name) == 0)
 		{
-			store = temp->next;
-			prev->next = store;
-			free(temp->name);
-			free(temp->data);
-			free(temp);
+			do_remove_envar(temp, prev);
 			break ;
 		}
 		prev = temp;

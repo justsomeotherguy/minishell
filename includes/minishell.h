@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/05 19:32:40 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:39:43 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int			count_tokens(char const *line, int count);
 int			is_between_quote(char *token, int pos);
 char		*get_envar(char *getname);
 int			get_envarname_length(char *token);
-int			trimquotes(char **tokens, int i);
+char		*trim_quotes(char *str, char c);
 
 /* token_expand.c */
-char		*expand_str(char *token, int pos);
+char		*expand_str(char *token);
 void		expand_tokens(char **tokens);
 
 /* builtins.c */
@@ -101,6 +101,9 @@ t_envar		*to_last(t_envar *envars);
 void		find_and_remove(t_envar *envars, char *var_name);
 t_envar		*find_env(t_envar *envars, char *name);
 
+/* envvar_utils2.c */
+void		do_remove_envar(t_envar *to_remove, t_envar *prev);
+
 /* execute.c */
 void		exec_cmd(char **cmds);
 int			pipe_exec(t_cmdset *current, int *curr_p, int *new_p);
@@ -123,6 +126,7 @@ void		open_close(t_cmdset *current, int *old_p, int *new_p);
 /* free.c */
 void		free_cmds(t_cmdset **cmdsets);
 void		free_2d_array(char **array);
+void		free_envar(t_envar *tofree);
 
 /* init_main.c */
 void		init_super(void);

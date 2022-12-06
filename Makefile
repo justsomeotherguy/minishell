@@ -6,7 +6,7 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/12/02 16:31:19 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/12/06 15:42:54 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ FILES = main.c \
 		builtin_cmds.c \
 		envvars.c \
 		envvarutils.c \
+		envvar_utils2.c \
 		execute.c \
 		execute_setfds.c \
 		execute_utils.c \
@@ -60,8 +61,8 @@ $(NAME): $(OBJS)
 		@$(MAKE) -C ./$(LIB)
 		@$(CC) $(FLAGS) $(OBJS) -L$(LIB) $(LIB)/$(LIB).a -L $(LINK_RL) -lreadline -o $@
 		@echo "\033[32m████████████████████████████"
-		@echo "\033[32m█████ \033[39mpushswap created \033[32m█████"
-		@echo "\033[32m████████████████████████████ \033[39m"
+		@echo "\033[32m█████\033[39mminishell  created\033[32m█████"
+		@echo "\033[32m████████████████████████████\033[39m"
 
 $(OBJS_DIR)%.o: $(SRC_DIR)%.c
 		@mkdir -p $(OBJS_DIR)
@@ -72,9 +73,9 @@ clean:
 		@$(RM) $(OBJS)
 		@$(RM) $(OBJS_DIR)
 		@echo "\033[33m████████████████████████████"
-		@echo "\033[33m█████ \033[39mcleaned pushswap \033[33m█████"
+		@echo "\033[33m█████\033[39mcleaned  minishell\033[33m█████"
 		@echo "\033[33m█████   \033[39mobject files   \033[33m█████"		
-		@echo "\033[33m████████████████████████████ \033[39m"
+		@echo "\033[33m████████████████████████████\033[39m"
 
 fclean:	clean
 		@$(MAKE) fclean -C ./$(LIB)		
@@ -82,8 +83,8 @@ fclean:	clean
 		@$(RM) $(NAME).a
 		@echo "\033[33m████████████████████████████"
 		@echo "\033[33m█████      \033[39mcleaned     \033[33m█████"
-		@echo "\033[33m█████ \033[39mpushswap.a files \033[33m█████"		
-		@echo "\033[33m████████████████████████████ \033[39m"
+		@echo "\033[33m█████  \033[39mminishell file  \033[33m█████"		
+		@echo "\033[33m████████████████████████████\033[39m"
 
 re: fclean all
 
