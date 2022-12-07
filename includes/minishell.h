@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/06 15:39:43 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:13:09 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,16 @@ char		**make_tokens(char *line);
 int			count_tokens(char const *line, int count);
 
 /* token_utils.c */
-int			is_between_quote(char *token, int pos);
 char		*get_envar(char *getname);
 int			get_envarname_length(char *token);
 char		*trim_quotes(char *str, char c);
+int			check_for_dollar(char *str);
+int			check_quotes(char *str);
 
 /* token_expand.c */
 char		*expand_str(char *token);
 void		expand_tokens(char **tokens);
+
 
 /* builtins.c */
 int			is_builtin_child(char **tokens);
