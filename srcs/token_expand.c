@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:28:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/07 16:30:56 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:33:41 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,52 @@
 
 extern t_super	g_super;
 
-char	*make_expanded_str(char *token, char *envdat)
+char	*add_expanded_str(char *new, char *token, int pos, int i)
+{
+	int		k;
+	char	*getdat;
+	char	*temp;
+
+	k = 0;
+	getdat = get_envar(&token[i]);
+	dprintf(2, "add getdat - %s\n", getdat);
+	if (!getdat)
+		return (new);
+	temp = malloc(sizeof(char) * (ft_strlen(token) + ft_strlen(getdat)));
+	ft_memcpy(temp, new, pos);
+	while (getdat[k] != '\0')
+	{
+		temp[pos + k] = getdat[k];
+		k++;
+	}
+	free(new);
+	return (temp);
+}
+
+char	*make_expanded_str(char *token)
 {
 	int		i;
 	int		j;
-	int		k;
 	char	*new;
 
-	dprintf(2, "input envdat - '%s'\n", envdat);
 	i = 0;
 	j = 0;
-	k = 0;
-	if (check_for_dollar(token) == 0)
+	if (check_for_dollar(token) < 0)
 		return (token);
-	if (envdat)
-		new = malloc(sizeof(char) * (ft_strlen(token) + ft_strlen(envdat)));
-	else
-		new = malloc(sizeof(char) * ft_strlen(token));
-	if (!new)
-		return (NULL);
-	while (token[i] != '\0' && token[i] != '$')
-	{
-		new[k] = token[i];
-		i++;
-		k++;
-	}
-	if (envdat)
-	{
-		while (envdat[j] != '\0')
-		{
-			new[k] = envdat[j];
-			j++;
-			k++;
-		}
-	}
-	i += get_envarname_length(&token[i]);
+	new = malloc(sizeof(char) * ft_strlen(token));
 	while (token[i] != '\0')
 	{
-		new[k] = token[i];
+		if (token[i] == '$')
+		{
+			new = add_expanded_str(new, token, j, i);
+			j = ft_strlen(new);
+			i += get_envarname_length(&token[i]);
+		}
+		new[j] = token[i];
+		j++;
 		i++;
-		k++;
 	}
-	new[k] = '\0';
+	new[j] = '\0';
 	free(token);
 	return (new);
 }
@@ -93,19 +97,17 @@ void	expand_tokens(char **tokens)
 	int		j;
 
 	i = 0;
-	while (tokens[i])
+	while (tokens[i] != NULL)
 	{
 		if (check_quotes(tokens[i]) == 2)
 			tokens[i] = check_to_trim(tokens[i]);
 		else if (check_quotes(tokens[i]) == 1)
 		{
-			tokens[i] = make_expanded_str(tokens[i],
-					get_envar(tokens[i]));
+			tokens[i] = make_expanded_str(tokens[i]);
 			tokens[i] = check_to_trim(tokens[i]);
 		}
 		else
-			tokens[i] = make_expanded_str(tokens[i],
-					get_envar(tokens[i]));
+			tokens[i] = make_expanded_str(tokens[i]);
 		i++;
 	}
 }

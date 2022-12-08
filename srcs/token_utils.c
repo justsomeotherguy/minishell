@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:56:38 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/07 16:12:27 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:32:55 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_for_dollar(char *str)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int	check_quotes(char *str)
@@ -57,6 +57,8 @@ char	*get_envar(char *token)
 
 	if (!token)
 		return (NULL);
+	if (token[check_for_dollar(token) + 1] == '?')
+		return (ft_itoa(g_super.status));
 	getname = ft_substr(token, (check_for_dollar(token) + 1),
 			get_envarname_length(token + (check_for_dollar(token) + 1)));
 	dprintf(2, "getname substr - '%s'\n", getname);

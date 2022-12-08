@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/07 16:13:09 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:50:04 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ int			check_for_dollar(char *str);
 int			check_quotes(char *str);
 
 /* token_expand.c */
-char		*expand_str(char *token);
+char		*check_to_trim(char *token);
 void		expand_tokens(char **tokens);
+char		*make_expanded_str(char *token);
+char		*add_expanded_str(char *new, char *token, int pos, int i);
 
 
 /* builtins.c */
