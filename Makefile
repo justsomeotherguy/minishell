@@ -6,7 +6,7 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/12/06 15:42:54 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/12/12 18:55:12 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ FILES = main.c \
 		envvars.c \
 		envvarutils.c \
 		envvar_utils2.c \
+		error.c \
 		execute.c \
 		execute_setfds.c \
 		execute_utils.c \

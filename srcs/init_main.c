@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:10:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/11/29 15:03:22 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/12 19:04:09 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_super(void)
 	g_super.envar_arr = NULL;
 	g_super.builtins = malloc(sizeof(char **) * 8);
 	g_super.builtins = set_builtin(g_super.builtins);
+	g_super.status = 0;
 }
 
 /*

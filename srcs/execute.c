@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/05 19:45:13 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:53:02 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,33 @@ void	exec_cmd(char **cmds)
 	{
 		if (execve(cmds[0], cmds, g_super.envar_arr) == -1)
 		{
-			ft_putstr_fd("Unable to execute command\n", 2);
-			exit(1); // to_do error
+			error_message("command not found", 127);
+			exit(127);
 		}
 	}
 	paths = init_pathlist();
 	if (!paths)
-		exit(1); // to_do error
+	{
+		error_message("command not found", 127);
+		exit(127);
+	}
 	exec_path = get_path_for_cmd(paths, cmds[0]);
 	if (!exec_path)
-		exit(1); // to_do error
+	{
+		error_message("command not found", 127);
+		exit(127);
+	}
 	if (execve(exec_path, cmds, g_super.envar_arr) == -1)
 	{
-		ft_putstr_fd("Unable to execute command\n", 2);
-		exit(1); // to_do error
+		error_message("command not found", 127);
+		exit(127);
 	}
-	exit(0);
 }
 
 int	pipe_exec(t_cmdset *current, int *curr_p, int *new_p)
 {
 	make_signal();
-	dprintf(2, "child process\n");
+//	dprintf(2, "child process\n");
 	open_close(current, curr_p, new_p);
 	set_redir(current);
 	if (is_builtin_child(current->tokens) >= 0)
@@ -56,29 +61,33 @@ int	pipe_exec(t_cmdset *current, int *curr_p, int *new_p)
 
 void	pipe_exec_fin(t_cmdset *current, int *old_p, int *new_p)
 {
-	dprintf(2, "parent process\n");
+	int		status;
+
+//	dprintf(2, "parent process\n");
 	if (current->cmd_no != 0)
 	{
 		close(old_p[0]);
-		dprintf(2, "parent - old_p[0] pipe closed\n");
+//		dprintf(2, "parent - old_p[0] pipe closed\n");
 		close(old_p[1]);
-		dprintf(2, "parent - old_p[1] pipe closed\n");
+//		dprintf(2, "parent - old_p[1] pipe closed\n");
 	}
 	if (current->next != NULL)
 	{
 		old_p[0] = new_p[0];
-		dprintf(2, "parent - old_p[0] to new_p[0]\n");
+//		dprintf(2, "parent - old_p[0] to new_p[0]\n");
 		old_p[1] = new_p[1];
-		dprintf(2, "parent - old_p[1] to new_p[1]\n");
+//		dprintf(2, "parent - old_p[1] to new_p[1]\n");
 	}
-	waitpid(g_super.pid, &g_super.status, 0);
+	waitpid(g_super.pid, &status, 0);
+	if (WIFEXITED(status))
+		g_super.status = WEXITSTATUS(status);
 }
 
 int	set_pipe(t_cmdset *current, int *new_p)
 {
 	if (current->next != NULL)
 	{
-		dprintf(2, "cmd set %i - create pipe\n", current->cmd_no);
+//		dprintf(2, "cmd set %i - create pipe\n", current->cmd_no);
 		if (pipe(new_p) < 0)
 			return (-1); // to do error
 	}

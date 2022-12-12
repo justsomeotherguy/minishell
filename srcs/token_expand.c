@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:28:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/08 15:33:41 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:23:37 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*add_expanded_str(char *new, char *token, int pos, int i)
 
 	k = 0;
 	getdat = get_envar(&token[i]);
-	dprintf(2, "add getdat - %s\n", getdat);
+//	dprintf(2, "add getdat - %s\n", getdat);
 	if (!getdat)
 		return (new);
 	temp = malloc(sizeof(char) * (ft_strlen(token) + ft_strlen(getdat)));

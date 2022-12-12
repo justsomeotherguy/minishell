@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/02 16:21:24 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:16:01 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ extern t_super	g_super;
 Creates a new environment variable using input token as name and data to
 fill in the node.
 */
-void	builtin_export(char **tokens)
+int	builtin_export(char **tokens)
 {
 	char		**split;
 	int			i;
@@ -26,13 +26,13 @@ void	builtin_export(char **tokens)
 	split = ft_split(tokens[1], '=');
 	i = 0;
 	if (!split[1])
-		return ;
+		return (1);
 	else
 	{
 		add_env(&g_super.envar, new_env(split[0], split[1]));
 	}
 	free(split);
-	return ;
+	return (0);
 }
 
 int	builtin_pwd(void)
@@ -46,7 +46,7 @@ int	builtin_pwd(void)
 Emulates the echo command, check if second token is -n to verify if option
 is used, then print remaining tokens followed by newline if -n was used.
 */
-void	builtin_echo(char **tokens)
+int	builtin_echo(char **tokens)
 {
 	int			i;
 	int			option;
@@ -54,14 +54,14 @@ void	builtin_echo(char **tokens)
 	i = 1;
 	option = 0;
 	if (!tokens[1])
-		exit(1);
+		return (1);
 	if (tokens[1] && ft_strcmp(tokens[1], "-n") == 0)
 	{
 		i++;
 		option++;
 	}
 	while (tokens[i])
-	{	
+	{
 		printf("%s", tokens[i]);
 		i++;
 		if (tokens[i] != 0)
@@ -70,8 +70,7 @@ void	builtin_echo(char **tokens)
 	if (option != 1)
 		printf("\n");
 	g_super.status = 0;
-	dprintf(2, "done echo\n");
-	return ;
+	return (0);
 }
 
 /*
@@ -91,7 +90,7 @@ int	builtin_cd(char **tokens)
 	if (chdir(tokens[1]) == 0)
 	{
 		if (getcwd(cwd, sizeof(cwd)) == NULL)
-			printf("getcwd error\n");
+			return (1);
 		else
 		{
 			free(oldpwd->data);
@@ -103,7 +102,7 @@ int	builtin_cd(char **tokens)
 	else
 	{
 		printf("chdir error\n");
-		return (-1);
+		return (1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/08 15:50:04 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/12 19:34:28 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void		expand_tokens(char **tokens);
 char		*make_expanded_str(char *token);
 char		*add_expanded_str(char *new, char *token, int pos, int i);
 
-
 /* builtins.c */
 int			is_builtin_child(char **tokens);
 int			is_builtin_parent(char **tokens);
@@ -89,8 +88,8 @@ void		do_builtin(int builtin_id, char **tokens);
 
 /* builtin_cmds.c */
 int			builtin_pwd(void);
-void		builtin_export(char **tokens);
-void		builtin_echo(char **tokens);
+int			builtin_export(char **tokens);
+int			builtin_echo(char **tokens);
 int			builtin_cd(char **tokens);
 
 /* envvars.c */
@@ -107,6 +106,10 @@ t_envar		*find_env(t_envar *envars, char *name);
 
 /* envvar_utils2.c */
 void		do_remove_envar(t_envar *to_remove, t_envar *prev);
+
+/* error.c */
+void		error_message(char *message, int status);
+void		mini_perror(void);
 
 /* execute.c */
 void		exec_cmd(char **cmds);

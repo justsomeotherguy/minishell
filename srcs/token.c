@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/06 16:28:23 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:24:18 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	token_length(char const *line)
 {
 	int		len;
 
-	dprintf(2, "token length received string %s\n", line);
+//	dprintf(2, "token length received string %s\n", line);
 	len = 0;
 	if (line[len] == 34)
 	{
@@ -113,8 +113,8 @@ char	**make_tokens(char *line)
 		i++;
 	}
 	tokens[j] = 0;
-	for (int l = 0; tokens[l]; l++)
-		dprintf(2, "tokens before expanding - '%s'\n", tokens[l]);
+//	for (int l = 0; tokens[l]; l++)
+//		dprintf(2, "tokens before expanding - '%s'\n", tokens[l]);
 	expand_tokens(tokens);
 	return (tokens);
 }

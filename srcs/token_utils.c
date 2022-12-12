@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:56:38 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/08 15:32:55 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:10:16 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	get_envarname_length(char *token)
 	int		i;
 
 	i = 0;
+	if (token[i + 1] == '?')
+		return (2);
 	while (token[i] != '\0' && token[i] != ' '
 		&& token[i] != 34 && token[i] != 39)
 		i++;
