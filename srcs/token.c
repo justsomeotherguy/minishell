@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/12 20:24:18 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:21:18 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ extern t_super	g_super;
 int	token_length(char const *line)
 {
 	int		len;
+	int		rev;
 
-//	dprintf(2, "token length received string %s\n", line);
+	dprintf(2, "token length received string %s\n", line);
 	len = 0;
+	rev = ft_strlen(line);
 	if (line[len] == 34)
 	{
-		len++;
-		while (line[len] != 34 && line[len] != '\0')
-			len++;
-		return (len);
+		while (line[rev] != 34 && rev > len)
+			rev--;
+		return (rev - len);
 	}
 	else if (line[len] == 39)
 	{
-		len ++;
-		while (line[len] != 39 && line[len] != '\0')
-			len++;
-		return (len);
+		while (line[rev] != 39 && rev > len)
+			rev--;
+		return (rev - len);
 	}
 	else
 	{
@@ -57,6 +57,7 @@ char	*make_token(char *line)
 		i++;
 	}
 	tk[i] = '\0';
+	dprintf(2, "made token - %s\n", tk);
 	return (tk);
 }
 
@@ -113,8 +114,8 @@ char	**make_tokens(char *line)
 		i++;
 	}
 	tokens[j] = 0;
-//	for (int l = 0; tokens[l]; l++)
-//		dprintf(2, "tokens before expanding - '%s'\n", tokens[l]);
+	for (int l = 0; tokens[l]; l++)
+		dprintf(2, "tokens before expanding - '%s'\n", tokens[l]);
 	expand_tokens(tokens);
 	return (tokens);
 }

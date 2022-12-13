@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:28:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/12 20:23:37 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:39:37 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*make_expanded_str(char *token)
 	j = 0;
 	if (check_for_dollar(token) < 0)
 		return (token);
-	new = malloc(sizeof(char) * ft_strlen(token));
+	new = malloc(sizeof(char) * (ft_strlen(token) + ft_strlen(ft_strchr(token, '$')));
 	while (token[i] != '\0')
 	{
 		if (token[i] == '$')
@@ -68,7 +68,6 @@ char	*check_to_trim(char *token)
 {
 	int		i;
 	char	*new;
-	char	*env_data;
 
 	if (check_quotes(token) == 2)
 	{

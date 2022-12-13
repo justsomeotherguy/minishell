@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:56:38 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/12 17:10:16 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:37:12 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,26 @@ int	get_envarname_length(char *token)
 	i = 0;
 	if (token[i + 1] == '?')
 		return (2);
-	while (token[i] != '\0' && token[i] != ' '
-		&& token[i] != 34 && token[i] != 39)
+	while (token[i] != '\0' && token[i] != ' ' && token[i] != 34
+		&& token[i] != 39)
 		i++;
 	return (i);
+}
+
+int	count_nonquotes(char *str, char c)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] != c)
+			j++;
+		i++;
+	}
+	return (j);
 }
 
 char	*trim_quotes(char *str, char c)
@@ -91,15 +107,17 @@ char	*trim_quotes(char *str, char c)
 
 	i = 0;
 	j = 0;
-	dprintf(2, "start trimming for %c\n", c);
-	new = malloc(sizeof(char) * ft_strlen(str));
+	new = malloc(sizeof(char) * (count_nonquotes(str, c) + 1));
 	while (str[i] != '\0')
 	{
 		if (str[i] == c)
 			i++;
-		new[j] = str[i];
+		else
+		{
+			new[j] = str[i];
+			j++;
+		}
 		i++;
-		j++;
 	}
 	new[j] = '\0';
 	return (new);
