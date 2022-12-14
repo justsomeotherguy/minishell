@@ -6,13 +6,27 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:28:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/13 15:39:37 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:26:36 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_super	g_super;
+
+void	replace_strings(char **split)
+{
+	char	*temp;
+	int		i;
+
+	i = 0;
+	while (split[i] != NULL)
+	{
+		dprintf(2, "split word [%i] - '%s'\n", i, split[i]);
+		i++;
+	}
+	return ;
+}
 
 char	*add_expanded_str(char *new, char *token, int pos, int i)
 {
@@ -41,27 +55,18 @@ char	*make_expanded_str(char *token)
 	int		i;
 	int		j;
 	char	*new;
+	char	**split;
 
 	i = 0;
 	j = 0;
 	if (check_for_dollar(token) < 0)
 		return (token);
-	new = malloc(sizeof(char) * (ft_strlen(token) + ft_strlen(ft_strchr(token, '$')));
-	while (token[i] != '\0')
-	{
-		if (token[i] == '$')
-		{
-			new = add_expanded_str(new, token, j, i);
-			j = ft_strlen(new);
-			i += get_envarname_length(&token[i]);
-		}
-		new[j] = token[i];
-		j++;
-		i++;
-	}
-	new[j] = '\0';
-	free(token);
-	return (new);
+	split = ft_split(token, '$');
+	replace_strings(split);
+//	new[j] = '\0';
+	free(split);
+//	free(token);
+	return (token);
 }
 
 char	*check_to_trim(char *token)
