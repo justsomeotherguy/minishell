@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/12 19:34:28 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:11:17 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <sys/ioctl.h>
 
 # include <fcntl.h>
+
+# include <stdbool.h>
 
 # include "libft.h"
 
@@ -71,9 +73,13 @@ int			count_tokens(char const *line, int count);
 /* token_utils.c */
 char		*get_envar(char *getname);
 int			get_envarname_length(char *token);
-char		*trim_quotes(char *str, char c);
 int			check_for_dollar(char *str);
 int			check_quotes(char *str);
+char		*check_to_trim(char *token);
+
+/* token_utils2.c */
+char		*trim_quotes(char *str, char c);
+int			count_nonquotes(char *str, char c);
 
 /* token_expand.c */
 char		*check_to_trim(char *token);
@@ -154,6 +160,7 @@ void		make_signal(void);
 /* utils.c */
 int			ft_strcmp(char *s1, char *s2);
 int			is_meta(char c, char next);
+char		*ft_strjoin_safe_free(char *s1, char *s2, bool f1, bool f2);
 
 /* path.c */
 char		**init_pathlist(void);

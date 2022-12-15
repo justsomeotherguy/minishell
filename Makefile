@@ -6,7 +6,7 @@
 #    By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 14:18:22 by jwilliam          #+#    #+#              #
-#    Updated: 2022/12/12 18:55:12 by jwilliam         ###   ########.fr        #
+#    Updated: 2022/12/15 14:05:31 by jwilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,6 @@ LINK_RL = /usr/local/opt/readline/lib
 LIB = libft
 
 FLAGS = #-Wall -Werror -Wextra
-
-#RL = /usr/local/opt/readline/lib -lreadline
-#RL = -I /usr/local/opt/readline/include/ -lreadline
 
 RM = rm -rf
 
@@ -44,6 +41,7 @@ FILES = main.c \
 		sig.c \
 		token.c \
 		token_utils.c \
+		token_utils2.c \
 		token_expand.c \
 		utils.c \
 		path.c \

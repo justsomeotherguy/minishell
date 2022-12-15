@@ -6,12 +6,11 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/12 20:17:06 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:09:23 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdbool.h>
 
 t_super		g_super;
 
@@ -21,18 +20,6 @@ static void	free_main_items(char *line, char *prompt)
 	free_2d_array(g_super.full_tokens);
 	free(prompt);
 	free(line);
-}
-
-char	*ft_strjoin_safe_free(char *s1, char *s2, bool f1, bool f2)
-{
-	char	*str;
-
-	str = ft_strjoin(s1, s2);
-	if (f1)
-		free(s1);
-	if (f2)
-		free(s2);
-	return (str);
 }
 
 static char	*get_prompt(void)

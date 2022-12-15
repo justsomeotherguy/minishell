@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:56:38 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/14 16:54:22 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:22:35 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,9 @@ char	*get_envar(char *token)
 
 	if (!token)
 		return (NULL);
-	if (token[check_for_dollar(token) + 1] == '?')
+	if (token[0] == '?')
 		return (ft_itoa(g_super.status));
-	getname = ft_substr(token, (check_for_dollar(token) + 1),
-			get_envarname_length(token + (check_for_dollar(token) + 1)));
+	getname = ft_substr(token, 0, get_envarname_length(token));
 	dprintf(2, "getname substr - '%s'\n", getname);
 	temp = find_env(g_super.envar, getname);
 	free(getname);
@@ -75,48 +74,31 @@ int	get_envarname_length(char *token)
 	int		i;
 
 	i = 0;
-	if (token[i + 1] == '?')
-		return (2);
+	if (token[0] == '?')
+		return (1);
 	while (token[i] != '\0' && token[i] != ' ' && token[i] != 34
 		&& token[i] != 39)
 		i++;
 	return (i);
 }
 
-int	count_nonquotes(char *str, char c)
+char	*check_to_trim(char *token)
 {
 	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] != c)
-			j++;
-		i++;
-	}
-	return (j);
-}
-
-char	*trim_quotes(char *str, char c)
-{
-	int		i;
-	int		j;
 	char	*new;
 
-	i = 0;
-	j = 0;
-	new = malloc(sizeof(char) * (count_nonquotes(str, c) + 1));
-	while (str[i] != '\0')
+	if (check_quotes(token) == 2)
 	{
-		if (str[i] != c)
-		{
-			new[j] = str[i];
-			j++;
-		}
-		i++;
+		new = trim_quotes(token, 39);
+		free(token);
+		return (new);
 	}
-	new[j] = '\0';
-	return (new);
+	else if (check_quotes(token) == 1)
+	{
+		new = trim_quotes(token, 34);
+		free(token);
+		return (new);
+	}
+	else
+		return (token);
 }
