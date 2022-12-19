@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/15 16:09:23 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:24:15 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ t_super		g_super;
 
 static void	free_main_items(char *line, char *prompt)
 {
-	free_cmds(&g_super.cmds);
-	free_2d_array(g_super.full_tokens);
-	free(prompt);
-	free(line);
+	if (g_super.cmds)
+		free_cmds(&g_super.cmds);
+	if (g_super.full_tokens)
+		free_2d_array(g_super.full_tokens);
+	if (line)
+		free(line);
+	if (prompt)
+		free(prompt);
 }
 
 static char	*get_prompt(void)
@@ -67,7 +71,7 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		line = readline(prompt);
 		if (!line)
-			write(1, "\n", 1);
+			break ;
 		else
 		{
 			add_history(line);
@@ -77,5 +81,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free_main_items(line, prompt);
 	}
-	return (0);
+	exit(g_super.status);
 }

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:28:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/15 16:25:03 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/19 19:50:49 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,9 @@ char	*join_split_strings(char **split)
 	temp = ft_strdup("");
 	while (split[i] != NULL)
 	{
-		dprintf(2, "split[%i] in join split strings - '%s'\n", i, split[i]);
-		dprintf(2, "dafuq mate - '%s'\n", temp);
 		temp = ft_strjoin_safe_free(temp, split[i], true, false);
-		dprintf(2, "dafuq mate - '%s'\n", temp);
 		i++;
 	}
-	dprintf(2, "joined split string - '%s'\n", temp);
 	return (temp);
 }
 
@@ -50,15 +46,9 @@ char	*join_strings(char *str, char *envdat)
 			i++;
 	}
 	if (envdat)
-	{
 		temp = ft_strjoin(ft_strdup(envdat), (str + i));
-		dprintf(2, "join strings - '%s'\n", temp);
-	}
 	else
-	{
 		temp = ft_strjoin("", (str + i));
-		dprintf(2, "join strings - '%s'\n", temp);
-	}
 	return (temp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:34:04 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/15 13:45:24 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:08:00 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*trim_quotes(char *str, char c)
 	i = 0;
 	j = 0;
 	new = malloc(sizeof(char) * (count_nonquotes(str, c) + 1));
+	if (!new)
+		return (NULL);
 	while (str[i] != '\0')
 	{
 		if (str[i] != c)

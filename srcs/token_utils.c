@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:56:38 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/15 14:22:35 by jwilliam         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:10:13 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,15 @@ char	*check_to_trim(char *token)
 	{
 		new = trim_quotes(token, 39);
 		free(token);
-		return (new);
+		token = new;
+		return (token);
 	}
 	else if (check_quotes(token) == 1)
 	{
 		new = trim_quotes(token, 34);
 		free(token);
-		return (new);
+		token = new;
+		return (token);
 	}
 	else
 		return (token);
