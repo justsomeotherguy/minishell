@@ -6,13 +6,125 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:28:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/19 19:50:49 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/02 21:15:26 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_super	g_super;
+
+void	add_envar_to_str(char *token, char *new, int *i, int *j)
+{
+	char	*temp;
+	int		k;
+
+	dprintf(2, "add envar to expanded str\n");
+	dprintf(2, "%s, %s, %i, %i\n", token, new, *i, *j);
+	k = 0;
+	temp = get_envar(&token[*i + 1]);
+	*i += (get_envarname_length(&token[*i + 1]) + 1);
+	if (temp)
+	{
+		while (temp[k] != '\0')
+		{
+			new[*j] = temp[k];
+			*j += 1;
+			k++;
+		}
+	}
+	free(temp);
+	return ;
+}
+
+char	*make_expanded_str(char *token)
+{
+	int		i;
+	int		j;
+	char	*new;
+	char	c;
+	int		count;
+
+	i = -1;
+	j = 0;
+	count = 0;
+	new = ft_calloc(512, sizeof(char));
+	while (token[++i] != '\0')
+	{
+		if ((token[i] == 34 || token[i] == 39) && count == 0)
+		{
+			c = token[i];
+			count = count_start_quotes(&token[i], c) + 1;
+		}
+		if (token[i] == c && count > 0)
+			count--;
+		if (token[i] == '$' && (c != 39 && count > 0))
+			add_envar_to_str(token, new, &i, &j);
+		new[j++] = token[i];
+	}
+	new[j] = '\0';
+	return (new);
+}
+
+char	*get_expanded_str(char *token)
+{
+	int		i;
+	int		j;
+	char	*new;
+	char	*temp;
+
+	i = 0;
+	j = 0;
+	if (token[0] == '~' && token[1] == '\0')
+	{
+		new = ft_strdup(get_envar("HOME"));
+		return (new);
+	}
+	if (token[0] == '$')
+	{
+		new = get_envar(token + 1);
+		return (new);
+	}
+	temp = make_expanded_str(token);
+	free(token);
+	temp = resize_new_str(temp);
+	new = 0;
+	new = trim_quotes(temp);
+	free(temp);
+	new = resize_new_str(new);
+	return (new);
+}
+
+/*
+Checks tokens if $ character is within it.
+Checks name after $ against environment variables and replaces token with
+the content of the variable.
+*/
+void	expand_tokens(char **tokens)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 0;
+	while (tokens[i])
+	{
+		if (has_special_characters(tokens[i]) >= 0)
+		{
+			temp = 0;
+			temp = get_expanded_str(tokens[i]);
+			if (!temp)
+				tokens[i] = ft_strdup("");
+			else
+				tokens[i] = temp;
+		}
+		i++;
+	}
+}
+
+/*
+
+old schidt
 
 char	*join_split_strings(char **split)
 {
@@ -76,48 +188,4 @@ void	replace_split_strings(char **split)
 	}
 	return ;
 }
-
-char	*make_expanded_str(char *token)
-{
-	int		i;
-	int		j;
-	char	*new;
-	char	**split;
-
-	i = 0;
-	j = 0;
-	if (check_for_dollar(token) < 0)
-		return (token);
-	split = ft_split(token, '$');
-	replace_split_strings(split);
-	new = join_split_strings(split);
-	free(split);
-	free(token);
-	return (new);
-}
-
-/*
-Checks tokens if $ character is within it.
-Checks name after $ against environment variables and replaces token with
-the content of the variable.
 */
-void	expand_tokens(char **tokens)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (tokens[i] != NULL)
-	{
-		if (check_quotes(tokens[i]) == 2)
-			tokens[i] = check_to_trim(tokens[i]);
-		else if (check_quotes(tokens[i]) == 1)
-		{
-			tokens[i] = make_expanded_str(tokens[i]);
-			tokens[i] = check_to_trim(tokens[i]);
-		}
-		else
-			tokens[i] = make_expanded_str(tokens[i]);
-		i++;
-	}
-}

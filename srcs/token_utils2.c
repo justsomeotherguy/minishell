@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:34:04 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/16 15:08:00 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/02 21:15:45 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,72 @@
 
 extern t_super	g_super;
 
-char	*trim_quotes(char *str, char c)
+char	*resize_new_str(char *old)
 {
 	int		i;
 	int		j;
 	char	*new;
 
+	i = ft_strlen(old);
+	new = malloc(sizeof(char) * (i + 1));
+	ft_memcpy(new, old, i);
+	free(old);
+	return (new);
+}
+
+int	count_start_quotes(char *token, char quote)
+{
+	int		i;
+	int		count;
+
 	i = 0;
-	j = 0;
-	new = malloc(sizeof(char) * (count_nonquotes(str, c) + 1));
+	count = 0;
+	while (token[i] == quote && token[i] != '\0')
+	{
+		i++;
+		count++;
+	}
+	return (count);
+}
+
+static void	init_ints_for_trim(int *i, int *j, int *count)
+{
+	*i = 0;
+	*j = 0;
+	*count = 0;
+	return ;
+}
+
+char	*trim_quotes(char *str)
+{
+	int		i;
+	int		j;
+	int		count;
+	char	*new;
+	char	c;
+
+	init_ints_for_trim(&i, &j, &count);
+	new = ft_calloc(512, sizeof(char));
 	if (!new)
 		return (NULL);
 	while (str[i] != '\0')
 	{
-		if (str[i] != c)
+		if ((str[i] == 34 || str[i] == 39) && count == 0)
 		{
-			new[j] = str[i];
-			j++;
+			c = str[i];
+			while (str[++i] == c)
+				++count;
 		}
-		i++;
+		if (!(str[i] == c && count > 0))
+			new[j++] = str[i];
+		if (str[i++] == c)
+			count--;
 	}
 	new[j] = '\0';
 	return (new);
 }
 
+/*
 int	count_nonquotes(char *str, char c)
 {
 	int		i;
@@ -53,3 +95,4 @@ int	count_nonquotes(char *str, char c)
 	}
 	return (j);
 }
+*/

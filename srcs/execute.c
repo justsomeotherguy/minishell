@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/12 20:53:02 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:38:34 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,8 @@ void	exec_cmd(char **cmds)
 		}
 	}
 	paths = init_pathlist();
-	if (!paths)
-	{
-		error_message("command not found", 127);
-		exit(127);
-	}
 	exec_path = get_path_for_cmd(paths, cmds[0]);
-	if (!exec_path)
+	if (!paths || !exec_path)
 	{
 		error_message("command not found", 127);
 		exit(127);
@@ -49,7 +44,6 @@ void	exec_cmd(char **cmds)
 int	pipe_exec(t_cmdset *current, int *curr_p, int *new_p)
 {
 	make_signal();
-//	dprintf(2, "child process\n");
 	open_close(current, curr_p, new_p);
 	set_redir(current);
 	if (is_builtin_child(current->tokens) >= 0)
@@ -63,20 +57,15 @@ void	pipe_exec_fin(t_cmdset *current, int *old_p, int *new_p)
 {
 	int		status;
 
-//	dprintf(2, "parent process\n");
 	if (current->cmd_no != 0)
 	{
 		close(old_p[0]);
-//		dprintf(2, "parent - old_p[0] pipe closed\n");
 		close(old_p[1]);
-//		dprintf(2, "parent - old_p[1] pipe closed\n");
 	}
 	if (current->next != NULL)
 	{
 		old_p[0] = new_p[0];
-//		dprintf(2, "parent - old_p[0] to new_p[0]\n");
 		old_p[1] = new_p[1];
-//		dprintf(2, "parent - old_p[1] to new_p[1]\n");
 	}
 	waitpid(g_super.pid, &status, 0);
 	if (WIFEXITED(status))
@@ -87,7 +76,6 @@ int	set_pipe(t_cmdset *current, int *new_p)
 {
 	if (current->next != NULL)
 	{
-//		dprintf(2, "cmd set %i - create pipe\n", current->cmd_no);
 		if (pipe(new_p) < 0)
 			return (-1); // to do error
 	}

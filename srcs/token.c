@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/14 16:41:24 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:53:51 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,29 @@ int	get_last_quote(char const *line, char c)
 int	token_length(char const *line)
 {
 	int		len;
+	int		count;
+	char	c;
 
-	dprintf(2, "token length received string %s\n", line);
 	len = 0;
+	count = 0;
 	while (line[len] != '\0')
 	{
-		if (line[len] == 34)
+		if ((line[len] == 34 || line[len] == 39) && count == 0)
 		{
-			len += get_last_quote(&line[len], 34);
-			return (len);
+			c = line[len];
+			count = count_start_quotes((char *)line, c);
+			len += count;
+			while (line[len] != '\0' && count > 0)
+			{
+				if (line[len] == c)
+					count--;
+				len++;
+			}
 		}
-		else if (line[len] == 39)
-		{
-			len += get_last_quote(&line[len], 39);
-			return (len);
-		}		
 		if (line[len] == ' ' || line[len] == '\0')
 			break ;
 		len++;
 	}
-	dprintf(2, "token length - %i\n", len);
 	return (len);
 }
 
@@ -77,7 +80,6 @@ char	*make_token(char *line)
 		i++;
 	}
 	tk[i] = '\0';
-	dprintf(2, "made token - %s of %i length\n", tk, i);
 	return (tk);
 }
 
@@ -134,8 +136,6 @@ char	**make_tokens(char *line)
 		i++;
 	}
 	tokens[j] = 0;
-	for (int l = 0; tokens[l]; l++)
-		dprintf(2, "tokens before expanding - '%s'\n", tokens[l]);
 	expand_tokens(tokens);
 	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/15 16:11:17 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/02 21:15:23 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ int			count_tokens(char const *line, int count);
 /* token_utils.c */
 char		*get_envar(char *getname);
 int			get_envarname_length(char *token);
-int			check_for_dollar(char *str);
-int			check_quotes(char *str);
-char		*check_to_trim(char *token);
+int			has_special_characters(char const *str);
 
 /* token_utils2.c */
-char		*trim_quotes(char *str, char c);
-int			count_nonquotes(char *str, char c);
+char		*resize_new_str(char *old);
+int			count_start_quotes(char *token, char c);
+char		*trim_quotes(char *str);
 
 /* token_expand.c */
+char		*resize_new_str(char *old);
 char		*check_to_trim(char *token);
 void		expand_tokens(char **tokens);
 char		*make_expanded_str(char *token);
