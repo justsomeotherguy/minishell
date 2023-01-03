@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:36:29 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/02 15:38:34 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:15:52 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,23 @@ void	exec_cmd(char **cmds)
 	if (cmds[0][0] == '/')
 	{
 		if (execve(cmds[0], cmds, g_super.envar_arr) == -1)
-		{
-			error_message("command not found", 127);
-			exit(127);
-		}
+			error_message_and_exit("Failed to execute", 126);
 	}
 	paths = init_pathlist();
 	exec_path = get_path_for_cmd(paths, cmds[0]);
 	if (!paths || !exec_path)
-	{
-		error_message("command not found", 127);
-		exit(127);
-	}
+		error_message_and_exit("Command not found", 127);
 	if (execve(exec_path, cmds, g_super.envar_arr) == -1)
-	{
-		error_message("command not found", 127);
-		exit(127);
-	}
+		error_message_and_exit("Failed to execute", 126);
 }
 
 int	pipe_exec(t_cmdset *current, int *curr_p, int *new_p)
 {
 	make_signal();
-	open_close(current, curr_p, new_p);
-	set_redir(current);
+	if (open_close(current, curr_p, new_p) != 0)
+		error_message_and_exit("Invalid file descriptors", 1);
+	if (set_redir(current) != 0)
+		error_message_and_exit("Failed to create redirects", 1);
 	if (is_builtin_child(current->tokens) >= 0)
 		do_builtin(is_builtin_child(current->tokens), current->tokens);
 	else
@@ -77,11 +70,17 @@ int	set_pipe(t_cmdset *current, int *new_p)
 	if (current->next != NULL)
 	{
 		if (pipe(new_p) < 0)
-			return (-1); // to do error
+		{
+			error_message("Failed to create pipe", 1);
+			return (-1);
+		}
 	}
 	g_super.pid = fork();
 	if (g_super.pid < 0)
-		return (-1); // to do error
+	{
+		error_message("Failed to create fork", 1);
+		return (-1);
+	}
 	return (0);
 }
 
@@ -100,13 +99,13 @@ void	executor(void)
 	while (current != NULL)
 	{
 		if (set_pipe(current, new_p) != 0)
-			return ; // to do error
+			return ;
 		if (g_super.pid == 0)
 			pipe_exec(current, old_p, new_p);
 		else if (g_super.pid > 0)
 			pipe_exec_fin(current, old_p, new_p);
 		else
-			return ; // to do error
+			return ;
 		current = current->next;
 	}
 	return ;

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/02 21:15:23 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:15:38 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void		do_remove_envar(t_envar *to_remove, t_envar *prev);
 
 /* error.c */
 void		error_message(char *message, int status);
+void		error_message_and_exit(char *message, int status);
 void		mini_perror(void);
 
 /* execute.c */
@@ -134,7 +135,7 @@ int			set_fd_out(t_cmdset *current);
 //int			ft_dup2(int old, int new);
 void		set_fds(void);
 int			set_redir(t_cmdset *current);
-void		open_close(t_cmdset *current, int *old_p, int *new_p);
+int			open_close(t_cmdset *current, int *old_p, int *new_p);
 
 /* free.c */
 void		free_cmds(t_cmdset **cmdsets);

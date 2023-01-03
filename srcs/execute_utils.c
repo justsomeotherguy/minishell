@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 16:48:45 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/02 15:39:29 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:15:49 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,34 @@ int	set_redir(t_cmdset *current)
 	if (current->fd_in > 2)
 	{
 		if (dup2(current->fd_in, STDIN_FILENO) < 0)
-			return (-1); // to do error
+			return (-1);
 		close(current->fd_in);
 	}
 	set_fd_out(current);
 	if (current->fd_out > 2)
 	{
 		if (dup2(current->fd_out, STDOUT_FILENO) < 0)
-			return (-1); // to do error
+			return (-1);
 		close(current->fd_out);
 	}
 	return (0);
 }
 
-void	open_close(t_cmdset *current, int *old_p, int *new_p)
+int	open_close(t_cmdset *current, int *old_p, int *new_p)
 {
 	if (current->cmd_no != 0)
 	{
 		close(old_p[1]);
 		if (dup2(old_p[0], STDIN_FILENO) < 0)
-			return ; // to do error
+			return (-1);
 		close(old_p[0]);
 	}
 	if (current->next != NULL)
 	{
 		close(new_p[0]);
 		if (dup2(new_p[1], STDOUT_FILENO) < 0)
-			return ; // to do error
+			return (-1);
 		close(new_p[1]);
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:56:38 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/02 21:13:50 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:17:48 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	*get_envar(char *token)
 	if (token[0] == '?')
 		return (ft_itoa(g_super.status));
 	getname = ft_substr(token, 0, get_envarname_length(token));
-	dprintf(2, "getname substr - '%s'\n", getname);
 	temp = find_env(g_super.envar, getname);
 	free(getname);
 	if (temp)

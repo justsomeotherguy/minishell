@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:28:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/02 21:15:26 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:17:43 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	add_envar_to_str(char *token, char *new, int *i, int *j)
 	char	*temp;
 	int		k;
 
-	dprintf(2, "add envar to expanded str\n");
-	dprintf(2, "%s, %s, %i, %i\n", token, new, *i, *j);
 	k = 0;
 	temp = get_envar(&token[*i + 1]);
 	*i += (get_envarname_length(&token[*i + 1]) + 1);
