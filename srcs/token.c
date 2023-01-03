@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:16:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/02 16:53:51 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:11:00 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	count_tokens(char const *line, int count)
 	i = 0;
 	while (line[i] != '\0')
 	{
-		if (i == 0 && (line[i] >= 33 && line[i] <= 127))
+		if (i == 0 && (line[i] >= 33 && line[i] < 127))
 			count++;
 		if (line[i] == 34)
 		{
@@ -105,7 +105,7 @@ int	count_tokens(char const *line, int count)
 				i++;
 		}
 		else if ((line[i] == ' ' || line[i] == '\t')
-			&& (line[i + 1] >= 33 && line[i + 1] <= 127))
+			&& (line[i + 1] >= 33 && line[i + 1] < 127))
 			count++;
 		i++;
 	}

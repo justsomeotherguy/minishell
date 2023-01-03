@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:32:00 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/03 18:15:38 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:05:30 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int			builtin_echo(char **tokens);
 int			builtin_cd(char **tokens);
 
 /* envvars.c */
-void		set_env(char **envp);
+void		set_env(int argc, char **argv, char **envp);
 void		print_env(void);
 void		rebuild_envar_arr(void);
 

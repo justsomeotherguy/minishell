@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:55:52 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/15 13:37:29 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:09:42 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	parse_token(void)
 {
 	t_cmdset	*temp;
 	int			tk;
-	int			i;
 
 	tk = 0;
 	temp = new_cmdset();

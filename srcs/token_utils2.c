@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:34:04 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/02 21:15:45 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:11:41 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ extern t_super	g_super;
 char	*resize_new_str(char *old)
 {
 	int		i;
-	int		j;
 	char	*new;
 
 	i = ft_strlen(old);

@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/12 20:16:01 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:06:07 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,12 @@ fill in the node.
 int	builtin_export(char **tokens)
 {
 	char		**split;
-	int			i;
 
 	split = ft_split(tokens[1], '=');
-	i = 0;
 	if (!split[1])
 		return (1);
 	else
-	{
 		add_env(&g_super.envar, new_env(split[0], split[1]));
-	}
 	free(split);
 	return (0);
 }

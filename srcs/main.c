@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:38:05 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/19 17:24:15 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:05:09 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*prompt;
 
 	init_super();
-	set_env(envp);
+	set_env(argc, argv, envp);
 	rebuild_envar_arr();
 	make_signal();
 	while (1)

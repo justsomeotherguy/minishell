@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:58:33 by jwilliam          #+#    #+#             */
-/*   Updated: 2022/12/02 16:21:59 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:09:20 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ extern t_super	g_super;
 Creates the initial environment variable list from the envp arguments
 received from the main function.
 */
-void	set_env(char **envp)
+void	set_env(int argc, char **argv, char **envp)
 {
-	int			i;	
+	int			i;
 	char		**envp_split;
 
 	i = 0;
+	(void)argc;
+	(void)argv;
 	while (envp[i])
 	{
 		envp_split = ft_split(envp[i], '=');

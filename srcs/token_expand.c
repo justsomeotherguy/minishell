@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:28:25 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/03 18:17:43 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:12:35 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,9 @@ char	*make_expanded_str(char *token)
 
 char	*get_expanded_str(char *token)
 {
-	int		i;
-	int		j;
 	char	*new;
 	char	*temp;
 
-	i = 0;
-	j = 0;
 	if (token[0] == '~' && token[1] == '\0')
 	{
 		new = ft_strdup(get_envar("HOME"));
@@ -101,7 +97,6 @@ the content of the variable.
 void	expand_tokens(char **tokens)
 {
 	int		i;
-	int		j;
 	char	*temp;
 
 	i = 0;
