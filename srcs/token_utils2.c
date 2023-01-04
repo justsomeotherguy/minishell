@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:34:04 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/03 21:11:41 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:23:20 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ char	*resize_new_str(char *old)
 	char	*new;
 
 	i = ft_strlen(old);
-	new = malloc(sizeof(char) * (i + 1));
+	new = ft_calloc((i + 1), sizeof(char));
 	ft_memcpy(new, old, i);
+	new[i + 1] = '\0';
 	free(old);
 	return (new);
 }
@@ -66,10 +67,10 @@ char	*trim_quotes(char *str)
 		if ((str[i] == 34 || str[i] == 39) && count == 0)
 		{
 			c = str[i];
-			while (str[++i] == c)
-				++count;
+			while (str[i] == c && str[i++] != '\0')
+				count++;
 		}
-		if (!(str[i] == c && count > 0))
+		if (!(str[i] == c && count > 0) && str[i] != '\0')
 			new[j++] = str[i];
 		if (str[i++] == c)
 			count--;

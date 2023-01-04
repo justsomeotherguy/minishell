@@ -6,7 +6,7 @@
 /*   By: jwilliam <jwilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:21 by jwilliam          #+#    #+#             */
-/*   Updated: 2023/01/03 21:06:07 by jwilliam         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:22:43 by jwilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	builtin_echo(char **tokens)
 	int			i;
 	int			option;
 
-	i = 1;
+	i = 0;
 	option = 0;
 	if (!tokens[1])
 		return (1);
@@ -56,17 +56,27 @@ int	builtin_echo(char **tokens)
 		i++;
 		option++;
 	}
-	while (tokens[i])
+	while (tokens[++i] != NULL)
 	{
-		printf("%s", tokens[i]);
-		i++;
-		if (tokens[i] != 0)
-			printf(" ");
+		if ((ft_strcmp(tokens[i], "-n") != 0) && tokens[i] != NULL)
+		{
+			printf("%s", tokens[i]);
+			if (tokens[i + 1] != 0)
+				printf(" ");
+		}
 	}
 	if (option != 1)
 		printf("\n");
 	g_super.status = 0;
 	return (0);
+}
+
+static void	change_dirs(t_envar *pwd, t_envar *old, char *cwd)
+{
+	free(old->data);
+	old->data = (char *)ft_strdup(pwd->data);
+	free(pwd->data);
+	pwd->data = ft_strdup(cwd);
 }
 
 /*
@@ -86,18 +96,16 @@ int	builtin_cd(char **tokens)
 	if (chdir(tokens[1]) == 0)
 	{
 		if (getcwd(cwd, sizeof(cwd)) == NULL)
-			return (1);
-		else
 		{
-			free(oldpwd->data);
-			oldpwd->data = (char *)ft_strdup(pwd->data);
-			free(pwd->data);
-			pwd->data = ft_strdup(cwd);
+			error_message("cd error", 1);
+			return (1);
 		}
+		else
+			change_dirs(pwd, oldpwd, cwd);
 	}
 	else
 	{
-		printf("chdir error\n");
+		error_message("No such file or directory", 1);
 		return (1);
 	}
 	return (0);
